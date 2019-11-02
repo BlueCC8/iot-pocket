@@ -1,0 +1,39 @@
+<StackLayout>
+  <Label text="Magic Blue" class="title"> </Label>
+
+  <Button (tap)="connectToMagicBlue()" text="Connect"> </Button>
+
+  <Slider
+    [minValue]="minValue"
+    [maxValue]="maxValue"
+    [(ngModel)]="redValue"
+    class="red"
+  >
+  </Slider>
+  <Label text="Red value {{ redValue }} " class="title"> </Label>
+  <Slider
+    [minValue]="minValue"
+    [maxValue]="maxValue"
+    [(ngModel)]="greenValue"
+    class="green"
+  >
+  </Slider>
+  <Slider
+    [minValue]="minValue"
+    [maxValue]="maxValue"
+    [(ngModel)]="blueValue"
+    class="blue"
+  >
+  </Slider>
+
+  <Slider
+    [minValue]="minValue"
+    [maxValue]="maxValue"
+    [(ngModel)]="whiteValue"
+    class="white"
+  >
+  </Slider>
+
+  <Button (tap)="updateLightBulb()" text="Apply"> </Button>
+  <StackLayout></StackLayout
+></StackLayout>
