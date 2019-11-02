@@ -14,10 +14,14 @@ import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
 // Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-
+import { KinveyModule } from 'kinvey-nativescript-sdk/angular';
 @NgModule({
     bootstrap: [AppComponent],
     imports: [
+        KinveyModule.init({
+            appKey: 'kid_SkEOLIs9H',
+            appSecret: '1f266895508c46528569ac47f1a81a6c',
+        }),
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptFormsModule,

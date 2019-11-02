@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MQTTClient, ClientOptions, SubscribeOptions } from 'nativescript-mqtt';
 import { Message } from 'nativescript-mqtt/common';
-// import * as Kinvey from 'kinvey-nativescript-sdk';
+import * as Kinvey from 'kinvey-nativescript-sdk';
 
 @Component({
     selector: 'ns-app',
@@ -30,22 +30,25 @@ export class AppComponent {
     loading: boolean = false;
 
     constructor() {
-        // Kinvey.init({
-        //     appKey: 'kid_SkEOLIs9H',
-        //     appSecret: '1f266895508c46528569ac47f1a81a6c',
-        // });
-        // Kinvey.ping()
-        //     .then(response => {
-        //         console.log(
-        //             `Kinvey Ping Success. Kinvey Service is alive,
-        //     version: ${response.version}, response: ${response.kinvey}`,
-        //         );
-        //     })
-        //     .catch(error => {
-        //         console.log(
-        //             `Kinvey Ping Failed. Response: ${error.description}`,
-        //         );
-        //     });
+        const promise = Kinvey.User.login('bluec', 'q12w')
+            .then((user: Kinvey.User) => {
+                Kinvey.ping()
+                    .then(response => {
+                        console.log(
+                            `Kinvey Ping Success. Kinvey Service is alive,
+                version: ${response.version}, response: ${response.kinvey}`,
+                        );
+                    })
+                    .catch(error => {
+                        console.log(
+                            `Kinvey Ping Failed. Response: ${error.description}`,
+                        );
+                    });
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
+
         this.setupHandlers();
     }
 
