@@ -8,7 +8,7 @@ import { Message } from "nativescript-mqtt/common";
 })
 export class AppComponent {
     mqtt_host: string = "broker.mqttdashboard.com";
-    mqtt_port: number = 10000;
+    mqtt_port: number = 8000;
     mqtt_useSSL: boolean = false;
     mqtt_path: string = "/mqtt";
     mqtt_username: string = "";
