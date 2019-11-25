@@ -1,40 +1,35 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ItemsComponent } from './item/items.component';
-import { ItemDetailComponent } from './item/item-detail.component';
-import { BulbControlComponent } from './bulb-control/bulb-control.component';
-import { BluetoothService } from './services/bluetooth.service';
-import { LightBulbCommandService } from './services/lightbulb-command.service';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { ItemsComponent } from "./item/items.component";
+import { ItemDetailComponent } from "./item/item-detail.component";
+import { BulbControlComponent } from "./bulb-control/bulb-control.component";
+import { BluetoothService } from "./services/bluetooth.service";
+import { LightBulbCommandService } from "./services/lightbulb-command.service";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
-import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
-import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-import { KinveyModule } from 'kinvey-nativescript-sdk/angular';
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 @NgModule({
     bootstrap: [AppComponent],
     imports: [
-        KinveyModule.init({
-            appKey: 'kid_SkEOLIs9H',
-            appSecret: '1f266895508c46528569ac47f1a81a6c',
-        }),
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptFormsModule,
-        NativeScriptHttpClientModule,
+        NativeScriptHttpClientModule
     ],
     declarations: [
         AppComponent,
         ItemsComponent,
         BulbControlComponent,
-        ItemDetailComponent,
+        ItemDetailComponent
     ],
     providers: [BluetoothService, LightBulbCommandService],
-    schemas: [NO_ERRORS_SCHEMA],
+    schemas: [NO_ERRORS_SCHEMA]
 })
 /*
 Pass your application module to the bootstrapModule function located in main.ts to start your app
