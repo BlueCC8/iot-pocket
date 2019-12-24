@@ -1,39 +1,51 @@
-<StackLayout>
-  <Label text="Magic Blue" class="title"> </Label>
+<FlexboxLayout flexDirection="column" class="page" horizontalAlignment="center">
+  <FlexboxLayout flexDirection="row" *ngIf="!bulbConnected">
+    <Button class="btn btn-primary" (tap)="connectToMagicBlue()" text="Connect">
+    </Button>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
+    <FlexboxLayout flexDirection="column">
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="redValue"
+        backgroundColor="red"
+        class="red"
+      >
+      </Slider>
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="greenValue"
+        backgroundColor="green"
+        class="green"
+      >
+      </Slider>
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="blueValue"
+        backgroundColor="blue"
+        class="blue"
+      >
+      </Slider>
 
-  <Button (tap)="connectToMagicBlue()" text="Connect"> </Button>
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="whiteValue"
+        class="white"
+      >
+      </Slider>
 
-  <Slider
-    [minValue]="minValue"
-    [maxValue]="maxValue"
-    [(ngModel)]="redValue"
-    class="red"
+      <Button class="btn btn-secondary" (tap)="updateLightBulb()" text="Apply">
+      </Button>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <ActivityIndicator
+    [busy]="isLoading"
+    horizontalAlignment="center"
+    verticalAlignment="center"
   >
-  </Slider>
-  <Label text="Red value {{ redValue }} " class="title"> </Label>
-  <Slider
-    [minValue]="minValue"
-    [maxValue]="maxValue"
-    [(ngModel)]="greenValue"
-    class="green"
-  >
-  </Slider>
-  <Slider
-    [minValue]="minValue"
-    [maxValue]="maxValue"
-    [(ngModel)]="blueValue"
-    class="blue"
-  >
-  </Slider>
-
-  <Slider
-    [minValue]="minValue"
-    [maxValue]="maxValue"
-    [(ngModel)]="whiteValue"
-    class="white"
-  >
-  </Slider>
-
-  <Button (tap)="updateLightBulb()" text="Apply"> </Button>
-  <StackLayout></StackLayout
-></StackLayout>
+  </ActivityIndicator>
+</FlexboxLayout>

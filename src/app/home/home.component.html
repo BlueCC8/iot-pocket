@@ -1,0 +1,17 @@
+<FlexboxLayout flexDirection="column" class="page">
+  <StackLayout horizontalAlignment="center" verticalAlignment="center">
+    <Button
+      text="home works!"
+      class="btn btn-primary"
+      text="Connect to the MQTT server"
+      (tap)="connect()"
+      style="horizontal-align: center;"
+    ></Button>
+  </StackLayout>
+  <ActivityIndicator
+    [busy]="loading"
+    horizontalAlignment="center"
+    verticalAlignment="center"
+  >
+  </ActivityIndicator>
+</FlexboxLayout>
