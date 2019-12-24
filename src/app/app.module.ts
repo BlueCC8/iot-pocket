@@ -3,16 +3,19 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ItemsComponent } from "./item/items.component";
-import { ItemDetailComponent } from "./item/item-detail.component";
+
 import { BulbControlComponent } from "./bulb-control/bulb-control.component";
-import { BluetoothService } from "./services/bluetooth.service";
-import { LightBulbCommandService } from "./services/lightbulb-command.service";
 
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { HomeComponent } from "./home/home.component";
+import { ItemsComponent } from "./items/items.component";
+import { ItemDetailComponent } from "./items/item/item-detail.component";
+import { BluetoothService } from "./shared/services/bluetooth.service";
+import { LightBulbCommandService } from "./shared/services/lightbulb-command.service";
+import { MQTTService } from "./shared/services/mqtt.service";
+import { SpinnerService } from "./shared/services/spinner.service";
 @NgModule({
     bootstrap: [AppComponent],
     imports: [
@@ -28,7 +31,12 @@ import { HomeComponent } from "./home/home.component";
         ItemDetailComponent,
         HomeComponent
     ],
-    providers: [BluetoothService, LightBulbCommandService],
+    providers: [
+        BluetoothService,
+        LightBulbCommandService,
+        MQTTService,
+        SpinnerService
+    ],
     schemas: [NO_ERRORS_SCHEMA]
 })
 /*

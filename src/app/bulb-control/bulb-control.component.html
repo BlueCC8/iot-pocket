@@ -5,14 +5,16 @@
   </FlexboxLayout>
   <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
     <FlexboxLayout flexDirection="column">
-      <Slider
-        [minValue]="minValue"
-        [maxValue]="maxValue"
-        [(ngModel)]="redValue"
-        backgroundColor="red"
-        class="red"
-      >
-      </Slider>
+      <StackLayout horizontalAlignment="center" verticalAlignment="center">
+        <Slider
+          [minValue]="minValue"
+          [maxValue]="maxValue"
+          [(ngModel)]="redValue"
+          backgroundColor="red"
+          class="red"
+        >
+        </Slider>
+      </StackLayout>
       <Slider
         [minValue]="minValue"
         [maxValue]="maxValue"
@@ -42,10 +44,10 @@
       </Button>
     </FlexboxLayout>
   </FlexboxLayout>
-  <ActivityIndicator
+  <!-- <ActivityIndicator
     [busy]="isLoading"
     horizontalAlignment="center"
     verticalAlignment="center"
   >
-  </ActivityIndicator>
+  </ActivityIndicator> -->
 </FlexboxLayout>

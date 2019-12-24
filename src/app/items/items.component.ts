@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Item } from "./item";
-import { ItemService } from "./item.service";
+import { Item } from "./item/item";
+import { ItemService } from "./item/item.service";
 import { registerElement } from "nativescript-angular/element-registry";
 import { CardView } from "@nstudio/nativescript-cardview";
 registerElement("CardView", () => CardView);

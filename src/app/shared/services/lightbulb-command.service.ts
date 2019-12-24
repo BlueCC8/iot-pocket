@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BluetoothService } from "./bluetooth.service";
-import { BleDevice } from "../models/ble-device.model";
-import { HexHelper } from "../helpers/hex-helper";
+import { BleDevice } from "../../models/ble-device.model";
+import { HexHelper } from "../../helpers/hex-helper";
 import { Subject } from "rxjs";
 
 @Injectable()
