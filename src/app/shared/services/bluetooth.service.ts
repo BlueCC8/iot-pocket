@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { BleDevice } from "../../models/ble-device.model";
 import { Bluetooth } from "nativescript-bluetooth/bluetooth";
+import { AlertService } from "./alert.service";
 
 @Injectable()
 export class BluetoothService {
     bluetooth: Bluetooth = new Bluetooth();
     bleDevicesAround: Array<BleDevice> = new Array();
 
+    constructor(private alertService: AlertService) {}
     write(bluetoothMessage): void {
         console.log("Writing message: " + JSON.stringify(bluetoothMessage));
 
@@ -58,17 +60,25 @@ export class BluetoothService {
         console.log("Scanning...");
         this.bleDevicesAround = new Array();
 
-        return this.bluetooth.startScanning({
-            // serviceUUIDs: [],
-            seconds: 3,
-            onDiscovered: device => {
-                console.log("UUID: " + device.UUID);
-                console.log("Name: " + device.name);
-                console.log("State: " + JSON.stringify(device.RSSI));
+        return this.bluetooth
+            .startScanning({
+                // serviceUUIDs: [],
+                seconds: 3,
+                onDiscovered: device => {
+                    console.log("UUID: " + device.UUID);
+                    console.log("Name: " + device.name);
+                    console.log("State: " + JSON.stringify(device.RSSI));
 
-                const bleDevice = new BleDevice(device.UUID, device.name, "");
-                this.bleDevicesAround.push(bleDevice);
-            }
-        });
+                    const bleDevice = new BleDevice(
+                        device.UUID,
+                        device.name,
+                        ""
+                    );
+                    this.bleDevicesAround.push(bleDevice);
+                }
+            })
+            .catch(e => {
+                this.alertService.showError("Bluetooth error:", e);
+            });
     }
 }

@@ -45,6 +45,7 @@ export class MQTTService {
     connect(username?, password?): void {
         try {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
+            this.setServerStatus(true);
             this.spinnerService.setSpinner(false);
             this.router.navigate(["/items"]);
         } catch (e) {
@@ -78,6 +79,9 @@ export class MQTTService {
     setupHandlers(): void {
         this.mqtt_client.onConnectionFailure.on(err => {
             this.alertService.showError("Connection failed: ", err);
+            this.setServerStatus(false);
+            this.spinnerService.setSpinner(false);
+            this.router.navigate(["/"]);
         });
 
         this.mqtt_client.onConnectionSuccess.on(() => {
@@ -85,12 +89,14 @@ export class MQTTService {
                 "Success",
                 "Connected succesfully to the MQTT server!"
             );
-            this.setServerStatus(true);
             this.subscribe();
         });
 
         this.mqtt_client.onConnectionLost.on(err => {
             this.alertService.showWarning("Connection lost: ", err);
+            this.setServerStatus(false);
+            this.spinnerService.setSpinner(false);
+            this.router.navigate(["/"]);
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {

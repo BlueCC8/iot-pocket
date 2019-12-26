@@ -1,23 +1,36 @@
-<!-- <FlexboxLayout flexDirection="column" class="page" alignContent="center">
-  <FlexboxLayout flexDirection="column"> -->
+<!-- <FlexboxLayout flexDirection="column" class="page" alignContent="center">-->
+<FlexboxLayout
+  flexDirection="column"
+  alignContent="center"
+  justifyContent="center"
+>
+  <Button
+    *ngIf="isConnected"
+    text="home works!"
+    class="btn btn-primary"
+    text="Disconnect"
+    (tap)="disconnect()"
+    style="vertical-align: center;"
+  ></Button>
 
-<Button
-  *ngIf="isConnected"
-  text="home works!"
-  class="btn btn-primary"
-  text="Disconnect"
-  (tap)="disconnect()"
-  style="vertical-align: center;"
-></Button>
-<Button
-  *ngIf="!isConnected"
-  text="home works!"
-  class="btn btn-primary"
-  text="Connect to the MQTT server"
-  (tap)="connect()"
-  style="vertical-align: center;"
-></Button>
-<!-- </FlexboxLayout>
+  <Button
+    *ngIf="isConnected"
+    class="btn btn-secondary"
+    [nsRouterLink]="['/items']"
+    text="Devices"
+    style="vertical-align: center;"
+  >
+  </Button>
+  <Button
+    *ngIf="!isConnected"
+    text="home works!"
+    class="btn btn-primary"
+    text="Connect to the MQTT server"
+    (tap)="connect()"
+    style="vertical-align: center;"
+  ></Button>
+</FlexboxLayout>
+<!--
   <ActivityIndicator
     [busy]="loading"
     horizontalAlignment="center"

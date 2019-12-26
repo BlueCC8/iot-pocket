@@ -42,7 +42,10 @@ export class LightBulbCommandService {
                         this.stateBulb.next(true);
                     });
             } else {
-                this.alertService.showError("Error", "Device not found");
+                this.alertService.showError(
+                    "Error",
+                    "Device not found, please check bluetooth connection"
+                );
                 this.spinnerService.setSpinner(false);
             }
         });
