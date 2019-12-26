@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { LightBulbCommandService } from "../shared/services/lightbulb-command.service";
 import { BluetoothService } from "../shared/services/bluetooth.service";
 import { Colors } from "../helpers/colors";
 import { Slider } from "tns-core-modules/ui/slider/slider";
 import { SpinnerService } from "../shared/services/spinner.service";
 import { AlertService } from "../shared/services/alert.service";
+import { Subscription } from "rxjs";
 
 @Component({
     moduleId: module.id,
@@ -12,7 +13,7 @@ import { AlertService } from "../shared/services/alert.service";
     templateUrl: "bulb-control.component.html",
     styleUrls: ["bulb-control.component.css"]
 })
-export class BulbControlComponent implements OnInit {
+export class BulbControlComponent implements OnInit, OnDestroy {
     maxValue = 255;
     minValue = 0;
     Colors = Colors;
@@ -25,6 +26,8 @@ export class BulbControlComponent implements OnInit {
     whiteValue = 100;
     isLoading = false;
     bulbConnected = false;
+    magicBlue: any;
+    subs: Subscription[] = [];
     constructor(
         private lightBulbCommandService: LightBulbCommandService,
         private bluetoothService: BluetoothService,
@@ -35,19 +38,27 @@ export class BulbControlComponent implements OnInit {
         this.spinnerService.setSpinner(true);
         console.log("Connecting to device");
         this.lightBulbCommandService.connectToMagicBlue();
-        this.lightBulbCommandService.stateBulbUpdated.subscribe(
-            bulbConnected => {
-                this.bulbConnected = bulbConnected;
-                this.spinnerService.setSpinner(false);
-                this.alertService.showSuccess(
-                    "Success",
-                    "Successfully conected to the lightbulb "
-                );
-            }
-        );
+    }
+    disconnectToMagicBlue() {
+        this.spinnerService.setSpinner(true);
+        this.lightBulbCommandService.disconnectToMagicBlue(this.magicBlue);
     }
 
     ngOnInit() {
+        this.subs.push(
+            this.lightBulbCommandService.stateBulbUpdated.subscribe(
+                bulbConnected => {
+                    this.bulbConnected = bulbConnected;
+                }
+            )
+        );
+        this.subs.push(
+            this.lightBulbCommandService.stateMagicBlueUpdated.subscribe(
+                magicBlue => {
+                    this.magicBlue = magicBlue;
+                }
+            )
+        );
         this.bluetoothService.fixPermission();
     }
 
@@ -59,5 +70,8 @@ export class BulbControlComponent implements OnInit {
             this.blueValue,
             this.whiteValue
         );
+    }
+    ngOnDestroy() {
+        this.subs.forEach(sub => sub.unsubscribe());
     }
 }

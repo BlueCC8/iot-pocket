@@ -2,37 +2,75 @@ import { Injectable } from "@angular/core";
 import { BluetoothService } from "./bluetooth.service";
 import { BleDevice } from "../../models/ble-device.model";
 import { HexHelper } from "../../helpers/hex-helper";
-import { Subject } from "rxjs";
+import { Subject, BehaviorSubject } from "rxjs";
+import { AlertService } from "./alert.service";
+import { SpinnerService } from "./spinner.service";
 
 @Injectable()
 export class LightBulbCommandService {
     magicBlue: BleDevice;
-    private stateBulb = new Subject<boolean>();
+    private stateMagicBlue = new BehaviorSubject<BleDevice>(null);
+    public stateMagicBlueUpdated = this.stateMagicBlue.asObservable();
+
+    private stateBulb = new BehaviorSubject<boolean>(false);
     public stateBulbUpdated = this.stateBulb.asObservable();
 
-    constructor(private bluetoothService: BluetoothService) {}
+    constructor(
+        private bluetoothService: BluetoothService,
+        private alertService: AlertService,
+        private spinnerService: SpinnerService
+    ) {}
 
     connectToMagicBlue() {
         this.bluetoothService.scan().then(() => {
             console.log("Scanning completed");
-            this.magicBlue = this.getMagicBlue();
+            const magicblue = this.getMagicBlue();
+            this.magicBlue = magicblue;
+            this.stateMagicBlue.next(magicblue);
+
             if (this.magicBlue) {
                 console.log("Magic blue found");
                 this.bluetoothService
                     .connect(this.magicBlue.UUID)
                     .then(device => {
                         console.log("Connected: " + JSON.stringify(device));
+                        this.alertService.showSuccess(
+                            "Success",
+                            "Successfully conected to the lightbulb "
+                        );
+                        this.spinnerService.setSpinner(false);
                         this.stateBulb.next(true);
                     });
             } else {
-                console.log("Device not found");
+                this.alertService.showError("Error", "Device not found");
+                this.spinnerService.setSpinner(false);
             }
         });
+    }
+    disconnectToMagicBlue(magicBlue) {
+        if (magicBlue) {
+            console.log("Magic blue found");
+            try {
+                this.bluetoothService.disconnect(magicBlue.UUID);
+                this.alertService.showSuccess(
+                    "Success",
+                    "Disconnect successful"
+                );
+                this.stateBulb.next(false);
+                this.spinnerService.setSpinner(false);
+            } catch (e) {
+                this.alertService.showError("Error", "Disconnect unsuccessful");
+                this.spinnerService.setSpinner(false);
+            }
+        } else {
+            this.alertService.showError("Not device");
+            this.spinnerService.setSpinner(false);
+        }
     }
 
     update(red: number, green: number, blue: number, white: number) {
         if (!this.magicBlue) {
-            console.log("Not connected to device");
+            this.alertService.showError("Not connected to device");
             return;
         }
         console.log("color=" + [56, red, green, blue, white, 240, 170]);

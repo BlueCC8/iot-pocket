@@ -14,28 +14,27 @@ export class AlertService {
     }
     public showSuccess(title?, message?): void {
         this.feedback.success({
-            title: title,
-            message: message,
+            title: title || "Success",
+            message: message || "",
             position: FeedbackPosition.Bottom,
             duration: 2500,
             onTap: () => console.log("showSuccess tapped")
         });
     }
-    public showError(): void {
+    public showError(title?, message?): void {
         this.feedback.show({
-            title: "The error title",
-            message: "Not too long a text here. But it could be..",
+            title: title || "Error",
+            message: message || "",
             duration: 1000,
             position: FeedbackPosition.Top,
             type: FeedbackType.Error,
             onTap: () => console.log("showError tapped")
         });
     }
-    public showWarning(): void {
+    public showWarning(title?, message?): void {
         this.feedback.show({
-            // title: "The warning title",
-            message:
-                "This one doesn't have a title, but a very long message so this baby will wrap. Showing off multi-line feedback. Woohoo!",
+            title: title || "Warning",
+            message: message || "",
             duration: 4000,
             position: FeedbackPosition.Top,
             type: FeedbackType.Warning,
@@ -44,28 +43,6 @@ export class AlertService {
     }
 
     public showInfo(title?, message?) {
-        // this.feedback.show({
-        //     title: `Info ${title}!`,
-        //     titleColor: new Color("#222222"),
-        //     position: FeedbackPosition.Bottom, // iOS only
-        //     type: FeedbackType.Custom, // this is the default type, by the way
-        //     message: message,
-        //     messageColor: new Color("#333333"),
-        //     duration: 3000,
-        //     backgroundColor: new Color("#f7f7f7"),
-        //     // icon: "customicon", // in App_Resources/platform folders
-        //     android: {
-        //         iconColor: new Color("#222222") // optional, leave out if you don't need it
-        //     },
-        //     onTap: () => console.log("showCustomIcon tapped"),
-        //     onShow: animating =>
-        //         console.log(
-        //             animating
-        //                 ? "showCustomIcon animating"
-        //                 : "showCustomIcon shown"
-        //         ),
-        //     onHide: () => console.log("showCustomIcon hidden")
-        // });
         this.feedback.show({
             title: title,
             message: message,

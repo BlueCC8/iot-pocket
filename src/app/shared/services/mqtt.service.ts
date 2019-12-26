@@ -9,6 +9,7 @@ import {
 import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
+import { Subject, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class MQTTService {
@@ -30,6 +31,9 @@ export class MQTTService {
     };
 
     mqtt_client: MQTTClient;
+    private mqttServerActive = new BehaviorSubject<boolean>(false);
+    public mqttServerUpdated = this.mqttServerActive.asObservable();
+
     constructor(
         private router: Router,
         private spinnerService: SpinnerService,
@@ -38,17 +42,23 @@ export class MQTTService {
         this.mqtt_client = new MQTTClient(this.mqtt_clientOptions);
         this.setupHandlers();
     }
-    public connect(username?, password?): void {
+    connect(username?, password?): void {
         try {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
             this.spinnerService.setSpinner(false);
-            this.alertService.showSuccess(
-                "Succes",
-                "You connected succesfully to the MQTT server"
-            );
             this.router.navigate(["/items"]);
         } catch (e) {
-            console.log("Caught error: " + e);
+            this.alertService.showError("Caught error: ", e);
+        }
+    }
+    disconnect() {
+        try {
+            this.mqtt_client.disconnect();
+            this.spinnerService.setSpinner(false);
+            this.mqttServerActive.next(false);
+            this.alertService.showSuccess("Success", "Disconnected!");
+        } catch (e) {
+            this.alertService.showError("Caughert error:", e);
         }
     }
     subscribe(): void {
@@ -59,29 +69,36 @@ export class MQTTService {
 
             this.mqtt_client.subscribe(this.mqtt_topic, opts);
         } catch (e) {
-            console.log("Caught error: " + e);
+            this.alertService.showError("Caught error: ", e);
         }
+    }
+    setServerStatus(status: boolean) {
+        this.mqttServerActive.next(status);
     }
     setupHandlers(): void {
         this.mqtt_client.onConnectionFailure.on(err => {
-            console.log("Connection failed: " + err);
+            this.alertService.showError("Connection failed: ", err);
         });
 
         this.mqtt_client.onConnectionSuccess.on(() => {
-            console.log("Connected successfully!");
+            this.alertService.showSuccess(
+                "Success",
+                "Connected succesfully to the MQTT server!"
+            );
+            this.setServerStatus(true);
             this.subscribe();
         });
 
         this.mqtt_client.onConnectionLost.on(err => {
-            console.log("Connection lost: " + err);
+            this.alertService.showWarning("Connection lost: ", err);
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {
-            console.log("Message received: " + message.payload);
+            this.alertService.showInfo("Message received: ", message.payload);
         });
 
         this.mqtt_client.onMessageDelivered.on((message: Message) => {
-            console.log("Message delivered: " + message.payload);
+            this.alertService.showInfo("Message delivered: ", message.payload);
         });
     }
 }

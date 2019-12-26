@@ -1,6 +1,16 @@
 <!-- <FlexboxLayout flexDirection="column" class="page" alignContent="center">
   <FlexboxLayout flexDirection="column"> -->
+
 <Button
+  *ngIf="isConnected"
+  text="home works!"
+  class="btn btn-primary"
+  text="Disconnect"
+  (tap)="disconnect()"
+  style="vertical-align: center;"
+></Button>
+<Button
+  *ngIf="!isConnected"
   text="home works!"
   class="btn btn-primary"
   text="Connect to the MQTT server"
