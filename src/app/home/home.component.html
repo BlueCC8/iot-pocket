@@ -1,34 +1,53 @@
-<!-- <FlexboxLayout flexDirection="column" class="page" alignContent="center">-->
 <FlexboxLayout
+  class="page"
   flexDirection="column"
   alignContent="center"
-  justifyContent="center"
+  justifyContent="space-around"
 >
-  <Button
-    *ngIf="isConnected"
-    text="home works!"
-    class="btn btn-primary"
-    text="Disconnect"
-    (tap)="disconnect()"
-    style="vertical-align: center;"
-  ></Button>
-
-  <Button
-    *ngIf="isConnected"
-    class="btn btn-secondary"
-    [nsRouterLink]="['/items']"
-    text="Devices"
-    style="vertical-align: center;"
+  <FlexboxLayout
+    flexDirection="column"
+    alignContent="center"
+    justifyContent="center"
   >
-  </Button>
-  <Button
-    *ngIf="!isConnected"
-    text="home works!"
-    class="btn btn-primary"
-    text="Connect to the MQTT server"
-    (tap)="connect()"
-    style="vertical-align: center;"
-  ></Button>
+    <Image
+      src="~/logo.png"
+      height="400px"
+      width="400px"
+      loadMode="async"
+      stretch="aspectFit"
+    ></Image>
+  </FlexboxLayout>
+  <FlexboxLayout
+    flexDirection="column"
+    alignContent="center"
+    justifyContent="center"
+  >
+    <Button
+      *ngIf="isConnected"
+      text="home works!"
+      class="btn btn-primary"
+      text="Disconnect"
+      (tap)="disconnect()"
+      style="vertical-align: center;"
+    ></Button>
+
+    <Button
+      *ngIf="isConnected"
+      class="btn btn-secondary"
+      [nsRouterLink]="['/items']"
+      text="Devices"
+      style="vertical-align: center;"
+    >
+    </Button>
+    <Button
+      *ngIf="!isConnected"
+      text="home works!"
+      class="btn btn-primary"
+      text="Connect to the MQTT server"
+      (tap)="connect()"
+      style="vertical-align: center;"
+    ></Button>
+  </FlexboxLayout>
 </FlexboxLayout>
 <!--
   <ActivityIndicator
