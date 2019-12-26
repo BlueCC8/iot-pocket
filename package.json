@@ -23,6 +23,7 @@
     "@nstudio/nativescript-cardview": "^1.0.0",
     "nativescript-angular": "~8.2.0",
     "nativescript-bluetooth": "^2.0.0-beta.26",
+    "nativescript-feedback": "^1.3.12",
     "nativescript-mqtt": "^1.2.0",
     "nativescript-theme-core": "~1.0.6",
     "reflect-metadata": "~0.1.12",

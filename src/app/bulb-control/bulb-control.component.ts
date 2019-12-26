@@ -4,6 +4,7 @@ import { BluetoothService } from "../shared/services/bluetooth.service";
 import { Colors } from "../helpers/colors";
 import { Slider } from "tns-core-modules/ui/slider/slider";
 import { SpinnerService } from "../shared/services/spinner.service";
+import { AlertService } from "../shared/services/alert.service";
 
 @Component({
     moduleId: module.id,
@@ -27,7 +28,8 @@ export class BulbControlComponent implements OnInit {
     constructor(
         private lightBulbCommandService: LightBulbCommandService,
         private bluetoothService: BluetoothService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertService: AlertService
     ) {}
     connectToMagicBlue() {
         this.spinnerService.setSpinner(true);
@@ -37,6 +39,10 @@ export class BulbControlComponent implements OnInit {
             bulbConnected => {
                 this.bulbConnected = bulbConnected;
                 this.spinnerService.setSpinner(false);
+                this.alertService.showSuccess(
+                    "Success",
+                    "Successfully conected to the lightbulb "
+                );
             }
         );
     }

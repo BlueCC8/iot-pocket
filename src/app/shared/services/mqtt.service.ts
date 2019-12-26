@@ -8,6 +8,7 @@ import {
 } from "nativescript-mqtt";
 import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
+import { AlertService } from "./alert.service";
 
 @Injectable()
 export class MQTTService {
@@ -31,7 +32,8 @@ export class MQTTService {
     mqtt_client: MQTTClient;
     constructor(
         private router: Router,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertService: AlertService
     ) {
         this.mqtt_client = new MQTTClient(this.mqtt_clientOptions);
         this.setupHandlers();
@@ -40,6 +42,10 @@ export class MQTTService {
         try {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
             this.spinnerService.setSpinner(false);
+            this.alertService.showSuccess(
+                "Succes",
+                "You connected succesfully to the MQTT server"
+            );
             this.router.navigate(["/items"]);
         } catch (e) {
             console.log("Caught error: " + e);

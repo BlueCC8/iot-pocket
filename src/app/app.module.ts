@@ -16,6 +16,7 @@ import { BluetoothService } from "./shared/services/bluetooth.service";
 import { LightBulbCommandService } from "./shared/services/lightbulb-command.service";
 import { MQTTService } from "./shared/services/mqtt.service";
 import { SpinnerService } from "./shared/services/spinner.service";
+import { AlertService } from "./shared/services/alert.service";
 @NgModule({
     bootstrap: [AppComponent],
     imports: [
@@ -35,7 +36,8 @@ import { SpinnerService } from "./shared/services/spinner.service";
         BluetoothService,
         LightBulbCommandService,
         MQTTService,
-        SpinnerService
+        SpinnerService,
+        AlertService
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
