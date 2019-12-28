@@ -46,7 +46,7 @@ export class MQTTService {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
             this.setServerStatus(true);
             this.spinnerService.setSpinner(false);
-            this.router.navigate(["/items"]);
+            this.router.navigate(["/"]);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }
@@ -66,8 +66,23 @@ export class MQTTService {
             const opts: SubscribeOptions = {
                 qos: 0
             };
-
+            console.log("Subscribe=" + this.mqtt_topic);
             this.mqtt_client.subscribe(this.mqtt_topic, opts);
+        } catch (e) {
+            this.alertService.showError("Caught error: ", e);
+        }
+    }
+    publish(mess: string): void {
+        try {
+            console.log(mess);
+            const message = new Message({
+                qos: 0,
+                destinationName: this.mqtt_topic,
+                payloadBytes: null,
+                payloadString: mess,
+                retained: true
+            });
+            this.mqtt_client.publish(message);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }
@@ -103,7 +118,10 @@ export class MQTTService {
         });
 
         this.mqtt_client.onMessageDelivered.on((message: Message) => {
-            this.alertService.showInfo("Message delivered: ", message.payload);
+            this.alertService.showSuccess(
+                "Message delivered: ",
+                message.payload
+            );
         });
     }
 }

@@ -48,6 +48,14 @@
     >
     </Button>
     <Button
+      *ngIf="isConnected"
+      class="-secondary -rounded-lg"
+      text="Send message"
+      (tap)="sendMessage()"
+      style="vertical-align: center;"
+    >
+    </Button>
+    <Button
       *ngIf="!isConnected"
       text="home works!"
       class="-primary -rounded-lg"

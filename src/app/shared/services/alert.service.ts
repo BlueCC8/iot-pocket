@@ -4,7 +4,6 @@ import {
     FeedbackType,
     FeedbackPosition
 } from "nativescript-feedback";
-import { Color } from "tns-core-modules/color";
 @Injectable()
 export class AlertService {
     private feedback: Feedback;
@@ -46,7 +45,7 @@ export class AlertService {
         this.feedback.show({
             title: title,
             message: message,
-            duration: 2000,
+            duration: 5000,
             position: FeedbackPosition.Bottom, // iOS only
             type: FeedbackType.Info,
             onTap: () => console.log("showInfo tapped"),
