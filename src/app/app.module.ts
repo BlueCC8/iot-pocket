@@ -17,6 +17,7 @@ import { LightBulbCommandService } from "./shared/services/lightbulb-command.ser
 import { MQTTService } from "./shared/services/mqtt.service";
 import { SpinnerService } from "./shared/services/spinner.service";
 import { AlertService } from "./shared/services/alert.service";
+import { ServerDetailsComponent } from './server-details/server-details.component';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -31,7 +32,8 @@ import { AlertService } from "./shared/services/alert.service";
         ItemsComponent,
         BulbControlComponent,
         ItemDetailComponent,
-        HomeComponent
+        HomeComponent,
+        ServerDetailsComponent
     ],
     providers: [
         BluetoothService,

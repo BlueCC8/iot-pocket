@@ -1,0 +1,145 @@
+<ActionBar
+  title="MQTT Server details"
+  class=" -primary text-center text-uppercase"
+>
+</ActionBar>
+<ScrollView class="page">
+  <StackLayout class="home-panel input-field nt-form">
+    <StackLayout class="hr-light"></StackLayout>
+    <FlexboxLayout flexDirection="row">
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="2"
+        flexShrink="0"
+      >
+        <Label text="MQTT Host name" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_host"
+          hint="Enter a MQTT Host name"
+          class="input input-border"
+        ></TextField>
+      </FlexboxLayout>
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="1"
+      >
+        <Label text="MQTT Port number" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_port"
+          hint="Mqtt port"
+          class="input input-border"
+          keyboardType="number"
+        ></TextField>
+      </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row">
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="2"
+        flexShrink="0"
+      >
+        <Label text="MQTT Path" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_path"
+          hint="Enter a MQTT path"
+          class="input input-border"
+        ></TextField>
+      </FlexboxLayout>
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="0"
+      >
+        <Label text="Use SSL" class="heading"></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.mqtt_useSSL"
+          class="switch"
+        ></Switch>
+      </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row">
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="2"
+        flexShrink="0"
+      >
+        <Label text="MQTT Main Topic" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_topic"
+          hint="Enter a main topic"
+          class="input input-border"
+        ></TextField>
+      </FlexboxLayout>
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="0"
+      >
+        <Label text="Clean Session" class="heading"></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.mqtt_cleanSession"
+          class="switch"
+        ></Switch>
+      </FlexboxLayout>
+    </FlexboxLayout>
+    <FlexboxLayout flexDirection="row">
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="1"
+      >
+        <Label text="MQTT Username" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_username"
+          hint="username"
+          class="input input-border"
+        ></TextField>
+      </FlexboxLayout>
+      <FlexboxLayout
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="center"
+        flexGrow="1"
+      >
+        <Label text="MQTT Password" class="heading"></Label>
+        <TextField
+          [(ngModel)]="serverModel.mqtt_password"
+          secure="true"
+          hint="Enter a MQTT path"
+          class="input input-border"
+        ></TextField>
+      </FlexboxLayout>
+    </FlexboxLayout>
+
+    <StackLayout class="hr-light"></StackLayout>
+    <FlexboxLayout
+      flexDirection="row"
+      alignContent="center"
+      justifyContent="center"
+    >
+      <Button
+        text="Submit"
+        (tap)="save()"
+        class="-primary -rounded-sm"
+      ></Button>
+      <Button
+        text="Reset"
+        (tap)="removeAll()"
+        class="-secondary -rounded-sm"
+      ></Button>
+    </FlexboxLayout>
+  </StackLayout>
+</ScrollView>

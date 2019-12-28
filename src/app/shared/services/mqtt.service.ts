@@ -13,22 +13,11 @@ import { Subject, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class MQTTService {
-    mqtt_host: string = "broker.mqttdashboard.com";
-    mqtt_port: number = 8000;
-    mqtt_useSSL: boolean = false;
-    mqtt_path: string = "/mqtt";
     mqtt_username: string = "";
     mqtt_password: string = "";
-    mqtt_topic: string = "safeTopic";
-    mqtt_cleanSession: boolean = true;
-    client;
-    mqtt_clientOptions: ClientOptions = {
-        host: this.mqtt_host,
-        port: this.mqtt_port,
-        useSSL: this.mqtt_useSSL,
-        path: this.mqtt_path,
-        cleanSession: this.mqtt_cleanSession
-    };
+    mqtt_topic: string = "";
+
+    mqtt_clientOptions: ClientOptions;
 
     mqtt_client: MQTTClient;
     private mqttServerActive = new BehaviorSubject<boolean>(false);
@@ -38,11 +27,21 @@ export class MQTTService {
         private router: Router,
         private spinnerService: SpinnerService,
         private alertService: AlertService
+    ) {}
+    setupClientOptions(
+        username,
+        password,
+        topic,
+        mqtt_clientOptions: ClientOptions
     ) {
+        this.mqtt_username = username;
+        this.mqtt_password = password;
+        this.mqtt_topic = topic;
+        this.mqtt_clientOptions = mqtt_clientOptions;
         this.mqtt_client = new MQTTClient(this.mqtt_clientOptions);
         this.setupHandlers();
     }
-    connect(username?, password?): void {
+    connect(): void {
         try {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
             this.setServerStatus(true);

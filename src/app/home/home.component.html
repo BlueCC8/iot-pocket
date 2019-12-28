@@ -16,6 +16,7 @@
       loadMode="async"
       stretch="aspectFit"
     ></Image>
+    <Label class="header" text="IoT Pocket"></Label>
   </FlexboxLayout>
   <FlexboxLayout
     flexDirection="column"
@@ -25,7 +26,7 @@
     <Button
       *ngIf="isConnected"
       text="home works!"
-      class="btn btn-primary"
+      class="-primary -rounded-lg"
       text="Disconnect"
       (tap)="disconnect()"
       style="vertical-align: center;"
@@ -33,7 +34,7 @@
 
     <Button
       *ngIf="isConnected"
-      class="btn btn-secondary"
+      class="-secondary -rounded-lg"
       [nsRouterLink]="['/items']"
       text="Devices"
       style="vertical-align: center;"
@@ -42,9 +43,9 @@
     <Button
       *ngIf="!isConnected"
       text="home works!"
-      class="btn btn-primary"
+      class="-primary -rounded-lg"
       text="Connect to the MQTT server"
-      (tap)="connect()"
+      [nsRouterLink]="['/server']"
       style="vertical-align: center;"
     ></Button>
   </FlexboxLayout>
