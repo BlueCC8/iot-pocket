@@ -4,6 +4,13 @@
   alignContent="center"
   justifyContent="space-around"
 >
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
   <FlexboxLayout
     flexDirection="column"
     alignContent="center"

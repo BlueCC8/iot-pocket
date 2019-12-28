@@ -4,124 +4,87 @@
 >
 </ActionBar>
 <ScrollView class="page">
-  <StackLayout class="home-panel input-field nt-form">
-    <StackLayout class="hr-light"></StackLayout>
-    <FlexboxLayout flexDirection="row">
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="2"
-        flexShrink="0"
-      >
-        <Label text="MQTT Host name" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_host"
-          hint="Enter a MQTT Host name"
-          class="input input-border"
-        ></TextField>
-      </FlexboxLayout>
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="1"
-      >
-        <Label text="MQTT Port number" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_port"
-          hint="Mqtt port"
-          class="input input-border"
-          keyboardType="number"
-        ></TextField>
-      </FlexboxLayout>
-    </FlexboxLayout>
-    <FlexboxLayout flexDirection="row">
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="2"
-        flexShrink="0"
-      >
-        <Label text="MQTT Path" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_path"
-          hint="Enter a MQTT path"
-          class="input input-border"
-        ></TextField>
-      </FlexboxLayout>
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="0"
-      >
-        <Label text="Use SSL" class="heading"></Label>
-        <Switch
-          checked="false"
-          [(ngModel)]="serverModel.mqtt_useSSL"
-          class="switch"
-        ></Switch>
-      </FlexboxLayout>
-    </FlexboxLayout>
-    <FlexboxLayout flexDirection="row">
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="2"
-        flexShrink="0"
-      >
-        <Label text="MQTT Main Topic" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_topic"
-          hint="Enter a main topic"
-          class="input input-border"
-        ></TextField>
-      </FlexboxLayout>
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="0"
-      >
-        <Label text="Clean Session" class="heading"></Label>
-        <Switch
-          checked="false"
-          [(ngModel)]="serverModel.mqtt_cleanSession"
-          class="switch"
-        ></Switch>
-      </FlexboxLayout>
-    </FlexboxLayout>
-    <FlexboxLayout flexDirection="row">
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="1"
-      >
-        <Label text="MQTT Username" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_username"
-          hint="username"
-          class="input input-border"
-        ></TextField>
-      </FlexboxLayout>
-      <FlexboxLayout
-        flexDirection="column"
-        alignContent="center"
-        justifyContent="center"
-        flexGrow="1"
-      >
-        <Label text="MQTT Password" class="heading"></Label>
-        <TextField
-          [(ngModel)]="serverModel.mqtt_password"
-          secure="true"
-          hint="Enter a MQTT path"
-          class="input input-border"
-        ></TextField>
-      </FlexboxLayout>
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
+  <StackLayout class="home-panel nt-form">
+    <StackLayout class="nt-input">
+      <Label text="MQTT Host name" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_host"
+        hint="Enter a MQTT Host name"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Port number" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_port"
+        hint="Mqtt port"
+        class="input -border"
+        keyboardType="number"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Path" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_path"
+        hint="Enter a MQTT path"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+
+    <StackLayout class="nt-input">
+      <Label text="MQTT Main Topic" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_topic"
+        hint="Enter a main topic"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Username" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_username"
+        hint="username"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+
+    <StackLayout class="nt-input">
+      <Label text="MQTT Password" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.mqtt_password"
+        secure="true"
+        hint="Enter a MQTT path"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+    <FlexboxLayout
+      flexDirection="row"
+      alignContent="center"
+      justifyContent="center"
+      class="nt-input"
+    >
+      <Label text="Use SSL" class="font-weight-bold labels_center"></Label>
+      <Switch
+        checked="false"
+        [(ngModel)]="serverModel.mqtt_useSSL"
+        class="switch"
+      ></Switch>
+      <Label
+        text="Clean Session"
+        class="font-weight-bold labels_center"
+      ></Label>
+      <Switch
+        checked="false"
+        [(ngModel)]="serverModel.mqtt_cleanSession"
+        class="switch m-b-30"
+      ></Switch>
     </FlexboxLayout>
 
     <StackLayout class="hr-light"></StackLayout>

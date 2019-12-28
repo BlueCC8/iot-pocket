@@ -8,7 +8,7 @@ import { SpinnerService } from "../shared/services/spinner.service";
     styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    loading: boolean = false;
+    isLoading: boolean = false;
     isConnected: boolean = false;
     subs: Subscription[] = [];
     constructor(
@@ -21,6 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
                 (statusServer: boolean) => {
                     this.isConnected = statusServer;
                 }
+            )
+        );
+        this.subs.push(
+            this.spinnerService.spinnerUpdated.subscribe(
+                spinnerState => (this.isLoading = spinnerState)
             )
         );
     }

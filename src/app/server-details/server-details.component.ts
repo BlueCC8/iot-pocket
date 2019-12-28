@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import * as appSettings from "tns-core-modules/application-settings";
 import { alert } from "tns-core-modules/ui/dialogs";
 import { ServerModel } from "../models/server.model";
@@ -6,6 +6,7 @@ import { SpinnerService } from "../shared/services/spinner.service";
 import { MQTTService } from "../shared/services/mqtt.service";
 import { ClientOptions } from "nativescript-mqtt";
 import { AlertService } from "../shared/services/alert.service";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: "ns-server-details",
@@ -13,7 +14,9 @@ import { AlertService } from "../shared/services/alert.service";
     templateUrl: "./server-details.component.html",
     styleUrls: ["./server-details.component.css"]
 })
-export class ServerDetailsComponent implements OnInit {
+export class ServerDetailsComponent implements OnInit, OnDestroy {
+    isLoading: boolean = false;
+    subs: Subscription[] = [];
     serverModel: ServerModel = new ServerModel(null);
     constructor(
         private spinnerService: SpinnerService,
@@ -24,6 +27,11 @@ export class ServerDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.subs.push(
+            this.spinnerService.spinnerUpdated.subscribe(
+                spinnerState => (this.isLoading = spinnerState)
+            )
+        );
         // TODO: For multiple servers a new date must be concatinated
 
         Object.keys(this.serverModel).forEach(key => {
@@ -121,5 +129,8 @@ export class ServerDetailsComponent implements OnInit {
         this.alertService.showSuccess(
             "All app settings values have been cleared!"
         );
+    }
+    ngOnDestroy() {
+        this.subs.forEach(sub => sub.unsubscribe());
     }
 }

@@ -59,6 +59,11 @@ export class BulbControlComponent implements OnInit, OnDestroy {
                 }
             )
         );
+        this.subs.push(
+            this.spinnerService.spinnerUpdated.subscribe(
+                spinnerState => (this.isLoading = spinnerState)
+            )
+        );
         this.bluetoothService.fixPermission();
     }
 

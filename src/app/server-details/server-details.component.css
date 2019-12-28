@@ -3,33 +3,12 @@
   margin: 15;
 }
 
-.description-label {
-  margin-bottom: 15;
-}
-
-.btn {
-  font-size: 18;
-}
-
-.lbl {
-  font-weight: 500;
-  align-items: center;
-  margin-bottom: 20;
-}
-
-.heading {
-  font-size: 16;
-  font-weight: 500;
-}
-
-.strong {
-  font-weight: 600;
-}
-
-.input {
-  margin: 5;
-}
-
 .hr-light {
   margin: 10;
+}
+.labels_center {
+  align-self: center;
+}
+.nt-input {
+  margin: 0 !important;
 }

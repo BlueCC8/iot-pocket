@@ -1,11 +1,22 @@
 <FlexboxLayout flexDirection="column" class="page" horizontalAlignment="center">
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
   <FlexboxLayout flexDirection="row" *ngIf="!bulbConnected">
-    <Button class="btn btn-primary" (tap)="connectToMagicBlue()" text="Connect">
+    <Button
+      class="-primary -rounded-lg"
+      (tap)="connectToMagicBlue()"
+      text="Connect"
+    >
     </Button>
   </FlexboxLayout>
   <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
     <Button
-      class="btn btn-primary"
+      class="-primary -rounded-lg"
       (tap)="disconnectToMagicBlue()"
       text="Disconnect"
     >
@@ -13,16 +24,15 @@
   </FlexboxLayout>
   <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
     <FlexboxLayout flexDirection="column">
-      <StackLayout horizontalAlignment="center" verticalAlignment="center">
-        <Slider
-          [minValue]="minValue"
-          [maxValue]="maxValue"
-          [(ngModel)]="redValue"
-          backgroundColor="red"
-          class="red"
-        >
-        </Slider>
-      </StackLayout>
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="redValue"
+        backgroundColor="red"
+        class="red"
+      >
+      </Slider>
+
       <Slider
         [minValue]="minValue"
         [maxValue]="maxValue"

@@ -1,13 +1,6 @@
 <!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
-<FlexboxLayout flexDirection="column" class="page" alignContent="center">
-  <ActivityIndicator
-    *ngIf="isLoading"
-    [busy]="isLoading"
-    horizontalAlignment="center"
-    verticalAlignment="center"
-  >
-  </ActivityIndicator>
+<StackLayout flexDirection="column" class="page">
   <main>
     <page-router-outlet></page-router-outlet>
   </main>
-</FlexboxLayout>
+</StackLayout>
