@@ -9,6 +9,7 @@
     "@nativescript/schematics": "^1.0.0"
   },
   "dependencies": {
-    "@nativescript/theme": "^2.2.1"
+    "@nativescript/theme": "^2.2.1",
+    "nativescript-ui-listview": "^8.0.1"
   }
 }

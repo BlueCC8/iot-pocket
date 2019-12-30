@@ -9,7 +9,7 @@ registerElement("CardView", () => CardView);
 @Component({
     selector: "ns-items",
     templateUrl: "./items.component.html",
-    styleUrls: ["./items.css"]
+    styleUrls: ["./items.component.css"]
 })
 export class ItemsComponent implements OnInit {
     items: Array<Item>;

@@ -10,9 +10,12 @@ import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
 import { Subject, BehaviorSubject } from "rxjs";
+import { TopicsService } from "~/app/topics-list/topics.service";
+import { TopicModel } from "~/app/models/topic.model";
 
 @Injectable()
 export class MQTTService {
+    topics: TopicModel[] = [];
     mqtt_username: string = "";
     mqtt_password: string = "";
     mqtt_topic: string = "";
@@ -26,7 +29,8 @@ export class MQTTService {
     constructor(
         private router: Router,
         private spinnerService: SpinnerService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private topicsService: TopicsService
     ) {}
     setupClientOptions(
         username,
@@ -61,13 +65,21 @@ export class MQTTService {
             this.alertService.showError("Caughert error:", e);
         }
     }
-    subscribe(): void {
+    subscribe(topicToSubscribe?): void {
         try {
             const opts: SubscribeOptions = {
                 qos: 0
             };
             console.log("Subscribe=" + this.mqtt_topic);
-            this.mqtt_client.subscribe(this.mqtt_topic, opts);
+            const topicModel = new TopicModel();
+
+            topicModel.topicName = topicToSubscribe
+                ? topicToSubscribe
+                : this.mqtt_topic;
+            topicModel.id = this.topics.push(topicModel);
+
+            this.topicsService.setTopics([...this.topics]);
+            this.mqtt_client.subscribe(topicModel.topicName, opts);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }

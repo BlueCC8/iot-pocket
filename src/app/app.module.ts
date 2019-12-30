@@ -17,7 +17,10 @@ import { LightBulbCommandService } from "./shared/services/lightbulb-command.ser
 import { MQTTService } from "./shared/services/mqtt.service";
 import { SpinnerService } from "./shared/services/spinner.service";
 import { AlertService } from "./shared/services/alert.service";
-import { ServerDetailsComponent } from './server-details/server-details.component';
+import { ServerDetailsComponent } from "./server-details/server-details.component";
+import { TopicsListComponent } from "./topics-list/topics-list.component";
+import { TopicsService } from "./topics-list/topics.service";
+import { TopicDetailComponent } from "./topics-list/topic-detail/topic-detail.component";
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -33,14 +36,17 @@ import { ServerDetailsComponent } from './server-details/server-details.componen
         BulbControlComponent,
         ItemDetailComponent,
         HomeComponent,
-        ServerDetailsComponent
+        ServerDetailsComponent,
+        TopicsListComponent,
+        TopicDetailComponent
     ],
     providers: [
         BluetoothService,
         LightBulbCommandService,
         MQTTService,
         SpinnerService,
-        AlertService
+        AlertService,
+        TopicsService
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
