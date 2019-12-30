@@ -16,23 +16,12 @@ import { MQTTService } from "../shared/services/mqtt.service";
     styleUrls: ["./topics-list.component.css"]
 })
 export class TopicsListComponent implements OnInit, OnDestroy {
-    @ViewChild("topicTextField", { static: false }) topicTextField: ElementRef;
     topicName = "";
     newTopicName = "";
     isLoading = false;
     listLoaded = false;
     topicsList: TopicModel[] = [];
     subs: Subscription[] = [];
-    public items = new Array<any>(
-        { id: 1, name: "Light bulb", role: "Actuator", type: "bulb" },
-        { id: 3, name: "Piqué", role: "Defender", type: "router" },
-        {
-            id: 4,
-            name: "I. Rakitic",
-            role: "Midfielder",
-            type: "wireless sensor"
-        }
-    );
     constructor(private mqttService: MQTTService) {}
 
     ngOnInit() {

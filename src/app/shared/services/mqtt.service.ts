@@ -55,7 +55,12 @@ export class MQTTService {
                 this.subscribe(topic.topicName);
             }
         });
+        topics = topics.filter((item, pos) => {
+            return topics.indexOf(item) == pos;
+        });
         this.topicsList = topics;
+        console.log("Set topics");
+        console.log(topics);
         this.topicsSubject.next(topics);
     }
     getTopic(id: number): TopicModel {
@@ -101,12 +106,12 @@ export class MQTTService {
             this.alertService.showError("Caught error: ", e);
         }
     }
-    publish(mess: string): void {
+    publish(mess: string, destinationName: string): void {
         try {
             console.log(mess);
             const message = new Message({
                 qos: 0,
-                destinationName: this.mqtt_topic,
+                destinationName: destinationName,
                 payloadBytes: null,
                 payloadString: mess,
                 retained: true
@@ -143,6 +148,12 @@ export class MQTTService {
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {
+            console.log(message);
+            this.topics.forEach((topic: TopicModel) => {
+                if (topic.topicName === message.topic) {
+                    topic.messages.push(message.payload);
+                }
+            });
             this.alertService.showInfo("Message received: ", message.payload);
         });
 

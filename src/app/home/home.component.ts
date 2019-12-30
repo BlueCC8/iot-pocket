@@ -3,6 +3,7 @@ import { MQTTService } from "../shared/services/mqtt.service";
 import { Subscription } from "rxjs";
 import { SpinnerService } from "../shared/services/spinner.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
+import { TopicModel } from "../models/topic.model";
 @Component({
     selector: "ns-home",
     templateUrl: "./home.component.html",
@@ -12,6 +13,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     isConnected: boolean = false;
     subs: Subscription[] = [];
+    topics: TopicModel[] = [];
+    topicsNames: string[] = [];
+    selectedTopic = "";
     constructor(
         private mqttService: MQTTService,
         private spinnerService: SpinnerService
@@ -29,20 +33,55 @@ export class HomeComponent implements OnInit, OnDestroy {
                 spinnerState => (this.isLoading = spinnerState)
             )
         );
+        const firstLoaded = this.mqttService.topicsList;
+        this.subs.push(
+            this.mqttService.topicsUpdated.subscribe(loadedTopics => {
+                console.log("Home loaded");
+                console.log(loadedTopics);
+                this.topics = loadedTopics;
+                this.topics.forEach((topic: TopicModel) => {
+                    if (this.topicsNames.indexOf(topic.topicName) == -1) {
+                        this.topicsNames.push(topic.topicName);
+                    }
+                });
+            })
+        );
+        console.log("Home first loaded");
+        this.topics = firstLoaded;
+        this.topics.forEach((topic: TopicModel) => {
+            if (this.topicsNames.indexOf(topic.topicName) == -1) {
+                this.topicsNames.push(topic.topicName);
+            }
+        });
     }
     sendMessage() {
         dialogs
-            .prompt({
-                title: "Message to the current topic",
-                message: "Enter your message",
-                okButtonText: "Send",
+            .action({
+                message: "Select available topics",
                 cancelButtonText: "Cancel",
-                defaultText: "Default text",
-                inputType: dialogs.inputType.text
+                actions: this.topicsNames
             })
-            .then(res => {
-                // alert("Dialog result: " + res.result + ", text: " + res.text);
-                this.mqttService.publish(res.text);
+            .then(result => {
+                this.selectedTopic = result;
+                if (this.selectedTopic) {
+                    dialogs
+                        .prompt({
+                            title: `Message to the ${this.selectedTopic} topic`,
+                            message: "Enter your message",
+                            okButtonText: "Send",
+                            cancelButtonText: "Cancel",
+                            defaultText: "Default message",
+                            inputType: dialogs.inputType.text
+                        })
+                        .then(res => {
+                            this.mqttService.publish(
+                                res.text,
+                                this.selectedTopic
+                            );
+                        });
+                } else {
+                    alert("Unselected topic");
+                }
             });
     }
     public connect() {

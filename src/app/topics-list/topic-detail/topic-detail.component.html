@@ -5,7 +5,13 @@
     <Label class="h2" [text]="topic.id + '. '"></Label>
     <Label class="h2" [text]="topic.topicName"></Label>
   </FlexboxLayout>
-  <FlexboxLayout flexDirection="row" class="m-15">
-    <Label class="h4" text="<Messages>"></Label>
+  <FlexboxLayout flexDirection="column" class="m-15">
+    <StackLayout>
+      <Label
+        *ngFor="let message of topic.messages"
+        class="h4"
+        [text]="message"
+      ></Label>
+    </StackLayout>
   </FlexboxLayout>
 </FlexboxLayout>
