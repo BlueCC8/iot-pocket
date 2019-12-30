@@ -19,7 +19,6 @@ import { SpinnerService } from "./shared/services/spinner.service";
 import { AlertService } from "./shared/services/alert.service";
 import { ServerDetailsComponent } from "./server-details/server-details.component";
 import { TopicsListComponent } from "./topics-list/topics-list.component";
-import { TopicsService } from "./topics-list/topics.service";
 import { TopicDetailComponent } from "./topics-list/topic-detail/topic-detail.component";
 
 @NgModule({
@@ -45,8 +44,7 @@ import { TopicDetailComponent } from "./topics-list/topic-detail/topic-detail.co
         LightBulbCommandService,
         MQTTService,
         SpinnerService,
-        AlertService,
-        TopicsService
+        AlertService
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

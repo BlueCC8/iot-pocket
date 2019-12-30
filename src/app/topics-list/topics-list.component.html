@@ -7,7 +7,22 @@
 </ActivityIndicator>
 <GridLayout>
   <ScrollView class="page">
-    <StackLayout>
+    <StackLayout class="nt-form">
+      <FlexboxLayout
+        flexDirection="row"
+        alignContent="center"
+        justifyContent="space-around"
+        class="nt-input"
+      >
+        <TextField
+          style="margin-top: 20;"
+          [(ngModel)]="newTopicName"
+          hint="New topic name"
+          class="input -border"
+          width="100%"
+        ></TextField>
+        <Button class="-primary -rounded-lg" text="Add" (tap)="add()"></Button>
+      </FlexboxLayout>
       <CardView
         *ngFor="let item of topicsList"
         class="card"
@@ -18,8 +33,6 @@
       >
         <StackLayout class="card-layout">
           <Label class="h2" [text]="item.topicName"></Label>
-
-          <!-- <Label class="body" textWrap="true" [text]="item.role"></Label> -->
         </StackLayout>
       </CardView>
     </StackLayout>

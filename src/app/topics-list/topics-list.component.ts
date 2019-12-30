@@ -6,10 +6,10 @@ import {
     OnDestroy
 } from "@angular/core";
 import { TopicModel } from "../models/topic.model";
-import { TopicsService } from "./topics.service";
 import { ListViewEventData, RadListView } from "nativescript-ui-listview";
 import { View } from "tns-core-modules/ui/core/view";
 import { Subscription } from "rxjs";
+import { MQTTService } from "../shared/services/mqtt.service";
 @Component({
     selector: "ns-topics-list",
     templateUrl: "./topics-list.component.html",
@@ -18,6 +18,7 @@ import { Subscription } from "rxjs";
 export class TopicsListComponent implements OnInit, OnDestroy {
     @ViewChild("topicTextField", { static: false }) topicTextField: ElementRef;
     topicName = "";
+    newTopicName = "";
     isLoading = false;
     listLoaded = false;
     topicsList: TopicModel[] = [];
@@ -32,16 +33,14 @@ export class TopicsListComponent implements OnInit, OnDestroy {
             type: "wireless sensor"
         }
     );
-    constructor(private topicsService: TopicsService) {}
+    constructor(private mqttService: MQTTService) {}
 
     ngOnInit() {
-        const firstLoaded = this.topicsService.topicsList;
+        const firstLoaded = this.mqttService.topicsList;
         this.subs.push(
-            this.topicsService.topicsUpdated.subscribe(loadedTopics => {
+            this.mqttService.topicsUpdated.subscribe(loadedTopics => {
                 console.log("Topics updated");
-                loadedTopics.forEach((topicObj: TopicModel) => {
-                    this.topicsList.unshift(topicObj);
-                });
+                this.topicsList = loadedTopics;
                 console.log(loadedTopics);
             })
         );
@@ -51,18 +50,15 @@ export class TopicsListComponent implements OnInit, OnDestroy {
     }
 
     add() {
-        if (this.topicName.trim() === "") {
+        if (this.newTopicName.trim() === "") {
             alert("Enter a topic item");
             return;
         }
-        // Dismiss the keyboard
-        let textField = this.topicTextField.nativeElement;
-        textField.dismissSoftInput();
         const topicModel = new TopicModel();
-
-        topicModel.topicName = this.topicName;
+        topicModel.topicName = this.newTopicName;
         this.topicsList.push(topicModel);
-        this.topicsService.setTopics(this.topicsList);
+        this.mqttService.setTopics(this.topicsList);
+        this.newTopicName = "";
     }
     onSwipeCellStarted(args: ListViewEventData) {
         var swipeLimits = args.data.swipeLimits;
@@ -77,7 +73,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
         let index = this.topicsList.indexOf(topic);
 
         this.topicsList.splice(index, 1);
-        this.topicsService.setTopics(this.topicsList);
+        this.mqttService.setTopics(this.topicsList);
     }
     ngOnDestroy() {
         this.subs.forEach(sub => sub.unsubscribe());

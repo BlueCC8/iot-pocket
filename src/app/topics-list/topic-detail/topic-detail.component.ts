@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TopicModel } from "~/app/models/topic.model";
-import { TopicsService } from "../topics.service";
+import { MQTTService } from "~/app/shared/services/mqtt.service";
 
 @Component({
     selector: "ns-topic-detail",
@@ -11,12 +11,12 @@ export class TopicDetailComponent implements OnInit {
     topic: TopicModel;
 
     constructor(
-        private topicsService: TopicsService,
+        private mqttService: MQTTService,
         private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
         const id = +this.route.snapshot.params.id;
-        this.topic = this.topicsService.getTopic(id);
+        this.topic = this.mqttService.getTopic(id);
     }
 }

@@ -10,7 +10,6 @@ import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
 import { Subject, BehaviorSubject } from "rxjs";
-import { TopicsService } from "~/app/topics-list/topics.service";
 import { TopicModel } from "~/app/models/topic.model";
 
 @Injectable()
@@ -25,12 +24,14 @@ export class MQTTService {
     mqtt_client: MQTTClient;
     private mqttServerActive = new BehaviorSubject<boolean>(false);
     public mqttServerUpdated = this.mqttServerActive.asObservable();
+    public topicsList: TopicModel[] = [];
+    private topicsSubject = new Subject<TopicModel[]>();
+    public topicsUpdated = this.topicsSubject.asObservable();
 
     constructor(
         private router: Router,
         private spinnerService: SpinnerService,
-        private alertService: AlertService,
-        private topicsService: TopicsService
+        private alertService: AlertService
     ) {}
     setupClientOptions(
         username,
@@ -44,6 +45,21 @@ export class MQTTService {
         this.mqtt_clientOptions = mqtt_clientOptions;
         this.mqtt_client = new MQTTClient(this.mqtt_clientOptions);
         this.setupHandlers();
+    }
+    setTopics(topics: TopicModel[]) {
+        console.log("Service topics");
+        console.log(topics);
+        topics.forEach((topic: TopicModel, index) => {
+            if (topic.id === null) {
+                topic.id = index + 1;
+                this.subscribe(topic.topicName);
+            }
+        });
+        this.topicsList = topics;
+        this.topicsSubject.next(topics);
+    }
+    getTopic(id: number): TopicModel {
+        return this.topicsList.filter(item => item.id === id)[0];
     }
     connect(): void {
         try {
@@ -70,16 +86,17 @@ export class MQTTService {
             const opts: SubscribeOptions = {
                 qos: 0
             };
-            console.log("Subscribe=" + this.mqtt_topic);
             const topicModel = new TopicModel();
 
             topicModel.topicName = topicToSubscribe
                 ? topicToSubscribe
                 : this.mqtt_topic;
+            console.log("Subscribe=" + topicModel.topicName);
             topicModel.id = this.topics.push(topicModel);
 
-            this.topicsService.setTopics([...this.topics]);
+            this.setTopics([...this.topics]);
             this.mqtt_client.subscribe(topicModel.topicName, opts);
+            this.alertService.showSuccess("Added topic:", topicModel.topicName);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }

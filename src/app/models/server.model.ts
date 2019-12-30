@@ -25,7 +25,7 @@ export class ServerModel {
             this.mqtt_path = "/mqtt";
             this.mqtt_username = "";
             this.mqtt_password = "";
-            this.mqtt_topic = "safeTopic";
+            this.mqtt_topic = "DefaultTopic";
             this.mqtt_cleanSession = true;
         }
     }
