@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             })
             .then(result => {
                 this.selectedTopic = result;
-                if (this.selectedTopic) {
+                if (this.selectedTopic !== "Cancel") {
                     dialogs
                         .prompt({
                             title: `Message to the ${this.selectedTopic} topic`,
@@ -74,10 +74,14 @@ export class HomeComponent implements OnInit, OnDestroy {
                             inputType: dialogs.inputType.text
                         })
                         .then(res => {
-                            this.mqttService.publish(
-                                res.text,
-                                this.selectedTopic
-                            );
+                            if (res.result) {
+                                this.mqttService.publish(
+                                    res.text,
+                                    this.selectedTopic
+                                );
+                            } else {
+                                alert("Mssage cancelled");
+                            }
                         });
                 } else {
                     alert("Unselected topic");
