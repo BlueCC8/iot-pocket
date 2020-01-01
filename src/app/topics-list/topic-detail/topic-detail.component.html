@@ -13,9 +13,9 @@
   <FlexboxLayout flexDirection="column" class="m-15">
     <StackLayout>
       <Label
-        *ngFor="let message of topic.messages"
+        *ngFor="let messageItem of topic.messages"
         class="h4 m-5"
-        [text]="message"
+        text="{{ messageItem.message }} at {{ messageItem.date }}"
       ></Label>
     </StackLayout>
     <Button

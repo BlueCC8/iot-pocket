@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             )
         );
         const firstLoaded = this.mqttService.topicsList;
+        console.log("Home first loaded");
+        this.topics = firstLoaded;
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
                 console.log("Home loaded");
@@ -40,8 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.topics = loadedTopics;
             })
         );
-        console.log("Home first loaded");
-        this.topics = firstLoaded;
     }
     sendMessage(topics) {
         const topicsNames = [];

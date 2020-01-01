@@ -11,6 +11,7 @@ import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
 import { Subject, BehaviorSubject } from "rxjs";
 import { TopicModel } from "~/app/models/topic.model";
+import { MessageModel } from "~/app/models/message.model";
 
 @Injectable()
 export class MQTTService {
@@ -116,7 +117,10 @@ export class MQTTService {
             topicModel.topicName = topicName ? topicName : this.mqtt_topic;
             console.log("Subscribe=" + topicModel.topicName);
             topicModel.id = this.topics.push(topicModel);
-
+            topicModel.date = new Date()
+                .toJSON()
+                .slice(0, 19)
+                .replace("T", " ");
             this.setTopics([...this.topics]);
             this.mqtt_client.subscribe(topicModel.topicName, opts);
             this.alertService.showSuccess(
@@ -172,7 +176,16 @@ export class MQTTService {
             const changedTopics = [...this.topics];
             changedTopics.forEach((topic: TopicModel) => {
                 if (topic.topicName === message.topic) {
-                    topic.messages.push(message.payload);
+                    const time = new Date()
+                        .toJSON()
+                        .slice(0, 19)
+                        .replace("T", " ");
+
+                    const messageModel: MessageModel = new MessageModel();
+                    messageModel.message = message.payload;
+                    messageModel.date = time;
+                    topic.messages.push(messageModel);
+                    this.setTopics([...this.topics]);
                 }
             });
             this.setTopics(changedTopics);

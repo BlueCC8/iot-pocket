@@ -21,6 +21,9 @@ export class TopicsListComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         const firstLoaded = this.mqttService.topicsList;
+        this.topicsList = firstLoaded;
+        console.log("First loaded");
+        console.log(firstLoaded);
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
                 console.log("Topics updated");
@@ -28,9 +31,6 @@ export class TopicsListComponent implements OnInit, OnDestroy {
                 console.log(loadedTopics);
             })
         );
-        this.topicsList = firstLoaded;
-        console.log("First loaded");
-        console.log(firstLoaded);
     }
 
     add() {
