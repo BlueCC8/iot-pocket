@@ -32,7 +32,6 @@ export class TopicDetailComponent implements OnInit, OnDestroy {
                 this.topicsList = loadedTopics;
                 const newTopic = this.topicsList.find(topic => topic.id === id);
                 this.topic = newTopic;
-                alert(JSON.stringify(this.topic));
                 console.log(loadedTopics);
                 this.ref.markForCheck();
             })
