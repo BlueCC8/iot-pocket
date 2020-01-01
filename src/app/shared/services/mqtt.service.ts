@@ -55,9 +55,9 @@ export class MQTTService {
                 this.subscribe(topic.topicName);
             }
         });
-        topics = topics.filter((item, pos) => {
-            return topics.indexOf(item) == pos;
-        });
+        // topics = topics.filter((item, pos) => {
+        //     return topics.indexOf(item) == pos;
+        // });
         this.topicsList = topics;
         console.log("Set topics");
         console.log(topics);
@@ -169,12 +169,13 @@ export class MQTTService {
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {
-            console.log(message);
-            this.topics.forEach((topic: TopicModel) => {
+            const changedTopics = [...this.topics];
+            changedTopics.forEach((topic: TopicModel) => {
                 if (topic.topicName === message.topic) {
                     topic.messages.push(message.payload);
                 }
             });
+            this.setTopics(changedTopics);
             this.alertService.showInfo("Message received: ", message.payload);
         });
 

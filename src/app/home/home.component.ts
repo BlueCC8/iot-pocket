@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                                     this.selectedTopic
                                 );
                             } else {
-                                alert("Mssage cancelled");
+                                alert("Message cancelled");
                             }
                         });
                 } else {

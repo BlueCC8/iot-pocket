@@ -44,14 +44,6 @@ export class TopicsListComponent implements OnInit, OnDestroy {
         this.mqttService.setTopics(this.topicsList);
         this.newTopicName = "";
     }
-    onSwipeCellStarted(args: ListViewEventData) {
-        var swipeLimits = args.data.swipeLimits;
-        var swipeView = args.object;
-        var rightItem = swipeView.getViewById<View>("delete-view");
-        swipeLimits.right = rightItem.getMeasuredWidth();
-        swipeLimits.left = 0;
-        swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
-    }
     delete(args: ListViewEventData) {
         let topic = <TopicModel>args.object.bindingContext;
         let index = this.topicsList.indexOf(topic);
