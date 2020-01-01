@@ -2,6 +2,11 @@
   title="MQTT Server details"
   class=" -primary text-center text-uppercase"
 >
+  <NavigationButton
+    text="Go Back"
+    android.systemIcon="ic_menu_back"
+    (tap)="goBack()"
+  ></NavigationButton>
 </ActionBar>
 <ScrollView class="page">
   <ActivityIndicator
@@ -64,27 +69,32 @@
         class="input -border"
       ></TextField>
     </StackLayout>
+
     <FlexboxLayout
       flexDirection="row"
       alignContent="center"
       justifyContent="center"
       class="nt-input"
     >
-      <Label text="Use SSL" class="font-weight-bold labels_center"></Label>
-      <Switch
-        checked="false"
-        [(ngModel)]="serverModel.mqtt_useSSL"
-        class="switch"
-      ></Switch>
-      <Label
-        text="Clean Session"
-        class="font-weight-bold labels_center"
-      ></Label>
-      <Switch
-        checked="false"
-        [(ngModel)]="serverModel.mqtt_cleanSession"
-        class="switch m-b-30"
-      ></Switch>
+      <StackLayout class="nt-input">
+        <Label text="Use SSL" class="font-weight-bold labels_center"></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.mqtt_useSSL"
+          class="switch"
+        ></Switch>
+      </StackLayout>
+      <StackLayout class="nt-input">
+        <Label
+          text="Clean Session"
+          class="font-weight-bold labels_center"
+        ></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.mqtt_cleanSession"
+          class="switch m-b-30"
+        ></Switch>
+      </StackLayout>
     </FlexboxLayout>
 
     <StackLayout class="hr-light"></StackLayout>

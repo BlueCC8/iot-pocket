@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     isConnected: boolean = false;
     subs: Subscription[] = [];
     topics: TopicModel[] = [];
-    topicsNames: string[] = [];
     selectedTopic = "";
     constructor(
         private mqttService: MQTTService,
@@ -39,27 +38,23 @@ export class HomeComponent implements OnInit, OnDestroy {
                 console.log("Home loaded");
                 console.log(loadedTopics);
                 this.topics = loadedTopics;
-                this.topics.forEach((topic: TopicModel) => {
-                    if (this.topicsNames.indexOf(topic.topicName) == -1) {
-                        this.topicsNames.push(topic.topicName);
-                    }
-                });
             })
         );
         console.log("Home first loaded");
         this.topics = firstLoaded;
-        this.topics.forEach((topic: TopicModel) => {
-            if (this.topicsNames.indexOf(topic.topicName) == -1) {
-                this.topicsNames.push(topic.topicName);
+    }
+    sendMessage(topics) {
+        const topicsNames = [];
+        topics.forEach((topic: TopicModel) => {
+            if (topicsNames.indexOf(topic.topicName) == -1) {
+                topicsNames.push(topic.topicName);
             }
         });
-    }
-    sendMessage() {
         dialogs
             .action({
                 message: "Select available topics",
                 cancelButtonText: "Cancel",
-                actions: this.topicsNames
+                actions: topicsNames
             })
             .then(result => {
                 this.selectedTopic = result;

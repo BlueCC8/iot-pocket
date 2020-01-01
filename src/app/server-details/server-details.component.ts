@@ -7,6 +7,7 @@ import { MQTTService } from "../shared/services/mqtt.service";
 import { ClientOptions } from "nativescript-mqtt";
 import { AlertService } from "../shared/services/alert.service";
 import { Subscription } from "rxjs";
+import { Location } from "@angular/common";
 
 @Component({
     selector: "ns-server-details",
@@ -21,7 +22,8 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
     constructor(
         private spinnerService: SpinnerService,
         private mqttService: MQTTService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private location: Location
     ) {
         this.mqttService;
     }
@@ -87,6 +89,9 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
         appSettings.remove(key);
         this.serverModel[key] = false;
         // alert("You removed the boolean from app settings!");
+    }
+    goBack() {
+        this.location.back();
     }
     save() {
         Object.keys(this.serverModel).forEach(key => {

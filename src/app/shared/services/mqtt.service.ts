@@ -86,22 +86,43 @@ export class MQTTService {
             this.alertService.showError("Caughert error:", e);
         }
     }
-    subscribe(topicToSubscribe?): void {
+    unsubscribe(topicName?): void {
+        try {
+            const topicModel = new TopicModel();
+
+            topicModel.topicName = topicName ? topicName : this.mqtt_topic;
+            console.log("Unsubscribe=" + topicModel.topicName);
+            this.topics = this.topics.filter(
+                topic => topic.topicName !== topicModel.topicName
+            );
+
+            this.setTopics([...this.topics]);
+            this.mqtt_client.unsubscribe(topicModel.topicName);
+            this.alertService.showSuccess(
+                "Unsubscribed topic:",
+                topicModel.topicName
+            );
+        } catch (e) {
+            this.alertService.showError("Caught error: ", e);
+        }
+    }
+    subscribe(topicName?): void {
         try {
             const opts: SubscribeOptions = {
                 qos: 0
             };
             const topicModel = new TopicModel();
 
-            topicModel.topicName = topicToSubscribe
-                ? topicToSubscribe
-                : this.mqtt_topic;
+            topicModel.topicName = topicName ? topicName : this.mqtt_topic;
             console.log("Subscribe=" + topicModel.topicName);
             topicModel.id = this.topics.push(topicModel);
 
             this.setTopics([...this.topics]);
             this.mqtt_client.subscribe(topicModel.topicName, opts);
-            this.alertService.showSuccess("Added topic:", topicModel.topicName);
+            this.alertService.showSuccess(
+                "Subscribed topic:",
+                topicModel.topicName
+            );
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }
