@@ -5,14 +5,14 @@
     (tap)="goBack()"
   ></NavigationButton>
 </ActionBar>
-<ActivityIndicator
-  [busy]="isLoading"
-  row="1"
-  horizontalAlignment="center"
-  verticalAlignment="center"
->
-</ActivityIndicator>
 <GridLayout>
+  <ActivityIndicator
+    [busy]="isLoading"
+    row="1"
+    horizontalAlignment="center"
+    verticalAlignment="center"
+  >
+  </ActivityIndicator>
   <ScrollView class="page">
     <StackLayout class="nt-form">
       <FlexboxLayout
