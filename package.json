@@ -9,7 +9,7 @@
     }
   },
   "description": "Iot Pocket",
-  "license": "SEE LICENSE IN <your-license-filename>",
+  "license": "SEE LICENSE IN LICENCE",
   "repository": "https://github.com/BlueCC8/iot-pocket.git",
   "dependencies": {
     "@angular/animations": "~8.2.0",

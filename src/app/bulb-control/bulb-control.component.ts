@@ -64,7 +64,7 @@ export class BulbControlComponent implements OnInit, OnDestroy {
                 spinnerState => (this.isLoading = spinnerState)
             )
         );
-        this.bluetoothService.fixPermission();
+        this.bluetoothService.fixLocationPermission();
     }
 
     updateLightBulb() {

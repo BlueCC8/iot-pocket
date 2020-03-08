@@ -18,7 +18,7 @@ export class BluetoothService {
         );
     }
 
-    fixPermission(): void {
+    fixLocationPermission(): void {
         this.bluetooth.hasCoarseLocationPermission().then(granted => {
             console.log("Has location permission ? " + granted);
 
@@ -37,7 +37,7 @@ export class BluetoothService {
                 console.log(
                     "Periperhal connected with UUID: " + peripheral.UUID
                 );
-                peripheral.services.forEach(function(service) {
+                peripheral.services.forEach(service => {
                     console.log("Service found: " + JSON.stringify(service));
                 });
             },

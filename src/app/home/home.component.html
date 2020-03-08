@@ -21,7 +21,7 @@
       text="{{ item.id }}{{ item.topicName }}"
     ></Label> -->
     <Image
-      src="~/logo.png"
+      src="~/assets/logo.png"
       height="400px"
       width="400px"
       loadMode="async"
@@ -34,6 +34,7 @@
     alignContent="center"
     justifyContent="center"
   >
+    <Label [text]="isConnected" class="font-weight-bold m-b-5"></Label>
     <Button
       *ngIf="isConnected"
       text="home works!"

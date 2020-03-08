@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { SpinnerService } from "../shared/services/spinner.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { TopicModel } from "../models/topic.model";
+import { ActivatedRoute } from "@angular/router";
 @Component({
     selector: "ns-home",
     templateUrl: "./home.component.html",
@@ -17,9 +18,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     selectedTopic = "";
     constructor(
         private mqttService: MQTTService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private route: ActivatedRoute
     ) {}
     ngOnInit() {
+        const { queryParams } = this.route.snapshot;
+        this.isConnected = queryParams["isConnected"]
+            ? queryParams["isConnected"]
+            : false;
         this.subs.push(
             this.mqttService.mqttServerUpdated.subscribe(
                 (statusServer: boolean) => {
@@ -37,8 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.topics = firstLoaded;
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
-                console.log("Home loaded");
-                console.log(loadedTopics);
+                // console.log("Home loaded");
+                // console.log(loadedTopics);
                 this.topics = loadedTopics;
             })
         );

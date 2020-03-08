@@ -23,7 +23,7 @@ export class MQTTService {
     mqtt_clientOptions: ClientOptions;
 
     mqtt_client: MQTTClient;
-    private mqttServerActive = new BehaviorSubject<boolean>(false);
+    private mqttServerActive = new Subject<boolean>();
     public mqttServerUpdated = this.mqttServerActive.asObservable();
     public topicsList: TopicModel[] = [];
     private topicsSubject = new Subject<TopicModel[]>();
@@ -56,9 +56,6 @@ export class MQTTService {
                 this.subscribe(topic.topicName);
             }
         });
-        // topics = topics.filter((item, pos) => {
-        //     return topics.indexOf(item) == pos;
-        // });
         this.topicsList = topics;
         console.log("Set topics");
         console.log(topics);
@@ -70,9 +67,6 @@ export class MQTTService {
     connect(): void {
         try {
             this.mqtt_client.connect(this.mqtt_username, this.mqtt_password);
-            this.setServerStatus(true);
-            this.spinnerService.setSpinner(false);
-            this.router.navigate(["/"]);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }
@@ -162,6 +156,11 @@ export class MQTTService {
                 "Success",
                 "Connected succesfully to the MQTT server!"
             );
+            this.setServerStatus(true);
+            this.spinnerService.setSpinner(false);
+            this.router.navigate(["home"], {
+                queryParams: { isConnected: true }
+            });
             this.subscribe();
         });
 
@@ -169,7 +168,9 @@ export class MQTTService {
             this.alertService.showWarning("Connection lost: ", err);
             this.setServerStatus(false);
             this.spinnerService.setSpinner(false);
-            this.router.navigate(["/"]);
+            this.router.navigate(["home"], {
+                queryParams: { isConnected: false }
+            });
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {
