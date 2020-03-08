@@ -1,26 +1,26 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
-import { Item } from "./item";
-import { ItemService } from "./item.service";
 import { Location } from "@angular/common";
+import { Device } from "../../models/device.model";
+import { DevicesService } from "../../services/devices.service";
 
 @Component({
     selector: "ns-details",
-    templateUrl: "./item-detail.component.html"
+    templateUrl: "./device-detail.component.html"
 })
-export class ItemDetailComponent implements OnInit {
-    item: Item;
+export class DeviceDetailComponent implements OnInit {
+    device: Device;
 
     constructor(
-        private itemService: ItemService,
+        private devicesService: DevicesService,
         private route: ActivatedRoute,
         private location: Location
     ) {}
 
     ngOnInit(): void {
         const id = +this.route.snapshot.params.id;
-        this.item = this.itemService.getItem(id);
+        this.device = this.devicesService.getDevice(id);
     }
     goBack() {
         this.location.back();

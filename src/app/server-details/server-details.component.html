@@ -20,7 +20,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Host name" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_host"
+        [(ngModel)]="serverModel.host"
         hint="Enter a MQTT Host name"
         class="input -border"
       ></TextField>
@@ -28,7 +28,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Port number" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_port"
+        [(ngModel)]="serverModel.port"
         hint="Mqtt port"
         class="input -border"
         keyboardType="number"
@@ -37,7 +37,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Path" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_path"
+        [(ngModel)]="serverModel.path"
         hint="Enter a MQTT path"
         class="input -border"
       ></TextField>
@@ -46,7 +46,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Main Topic" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_topic"
+        [(ngModel)]="serverModel.topic"
         hint="Enter a main topic"
         class="input -border"
       ></TextField>
@@ -54,7 +54,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Username" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_username"
+        [(ngModel)]="serverModel.username"
         hint="username"
         class="input -border"
       ></TextField>
@@ -63,7 +63,7 @@
     <StackLayout class="nt-input">
       <Label text="MQTT Password" class="font-weight-bold m-b-5"></Label>
       <TextField
-        [(ngModel)]="serverModel.mqtt_password"
+        [(ngModel)]="serverModel.password"
         secure="true"
         hint="Password"
         class="input -border"
@@ -80,7 +80,7 @@
         <Label text="Use SSL" class="font-weight-bold labels_center"></Label>
         <Switch
           checked="false"
-          [(ngModel)]="serverModel.mqtt_useSSL"
+          [(ngModel)]="serverModel.useSSL"
           class="switch"
         ></Switch>
       </StackLayout>
@@ -91,7 +91,7 @@
         ></Label>
         <Switch
           checked="false"
-          [(ngModel)]="serverModel.mqtt_cleanSession"
+          [(ngModel)]="serverModel.cleanSession"
           class="switch m-b-30"
         ></Switch>
       </StackLayout>

@@ -16,10 +16,6 @@
     alignContent="center"
     justifyContent="center"
   >
-    <!-- <Label
-      *ngFor="let item of topics"
-      text="{{ item.id }}{{ item.topicName }}"
-    ></Label> -->
     <Image
       src="~/assets/logo.png"
       height="400px"
@@ -47,7 +43,7 @@
     <Button
       *ngIf="isConnected"
       class="-secondary -rounded-lg"
-      [nsRouterLink]="['/items']"
+      [nsRouterLink]="['/devices']"
       text="Devices"
       style="vertical-align: center;"
     >

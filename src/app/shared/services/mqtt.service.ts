@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
 import { Subject, BehaviorSubject } from "rxjs";
-import { TopicModel } from "~/app/models/topic.model";
+import { TopicModel } from "~/app/topics/models/topic.model";
 import { MessageModel } from "~/app/models/message.model";
 
 @Injectable()
@@ -117,7 +117,7 @@ export class MQTTService {
             this.mqtt_client.subscribe(topic.topicName, opts);
             this.alertService.showSuccess("Subscribed topic:", topic.topicName);
         } catch (e) {
-            this.alertService.showError("Caught error: ", e);
+            this.alertService.showError("Caught error: ", JSON.stringify(e));
         }
     }
     publish(mess: string, destinationName: string): void {
@@ -132,7 +132,7 @@ export class MQTTService {
             });
             this.mqtt_client.publish(message);
         } catch (e) {
-            this.alertService.showError("Caught error: ", e);
+            this.alertService.showError("Caught error: ", JSON.stringify(e));
         }
     }
     setServerStatus(status: boolean) {

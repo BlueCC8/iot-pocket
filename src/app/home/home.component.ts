@@ -3,7 +3,7 @@ import { MQTTService } from "../shared/services/mqtt.service";
 import { Subscription } from "rxjs";
 import { SpinnerService } from "../shared/services/spinner.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import { TopicModel } from "../models/topic.model";
+import { TopicModel } from "../topics/models/topic.model";
 import { ActivatedRoute } from "@angular/router";
 @Component({
     selector: "ns-home",

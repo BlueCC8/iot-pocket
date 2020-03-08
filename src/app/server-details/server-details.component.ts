@@ -24,9 +24,7 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
         private mqttService: MQTTService,
         private alertService: AlertService,
         private location: Location
-    ) {
-        this.mqttService;
-    }
+    ) {}
 
     ngOnInit(): void {
         this.subs.push(
@@ -104,17 +102,17 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
             }
         });
         const mqtt_clientOptions: ClientOptions = {
-            host: this.serverModel.mqtt_host,
-            port: this.serverModel.mqtt_port,
-            useSSL: this.serverModel.mqtt_useSSL,
-            path: this.serverModel.mqtt_path,
-            cleanSession: this.serverModel.mqtt_cleanSession
+            host: this.serverModel.host,
+            port: this.serverModel.port,
+            useSSL: this.serverModel.useSSL,
+            path: this.serverModel.path,
+            cleanSession: this.serverModel.cleanSession
         };
         this.spinnerService.setSpinner(true);
         this.mqttService.setupClientOptions(
-            this.serverModel.mqtt_username,
-            this.serverModel.mqtt_password,
-            this.serverModel.mqtt_topic,
+            this.serverModel.username,
+            this.serverModel.password,
+            this.serverModel.topic,
             mqtt_clientOptions
         );
         this.mqttService.connect();

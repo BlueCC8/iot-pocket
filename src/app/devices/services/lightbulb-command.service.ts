@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { BluetoothService } from "./bluetooth.service";
+import { BluetoothService } from "../../shared/services/bluetooth.service";
 import { BleDevice } from "../../models/ble-device.model";
 import { HexHelper } from "../../helpers/hex-helper";
 import { Subject, BehaviorSubject } from "rxjs";
-import { AlertService } from "./alert.service";
-import { SpinnerService } from "./spinner.service";
+import { AlertService } from "../../shared/services/alert.service";
+import { SpinnerService } from "../../shared/services/spinner.service";
 
 @Injectable()
 export class LightBulbCommandService {

@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TopicModel } from "~/app/models/topic.model";
-import { MQTTService } from "~/app/shared/services/mqtt.service";
+
 import { Location } from "@angular/common";
 import { Subscription } from "rxjs";
+import { TopicModel } from "~/app/topics/models/topic.model";
+import { MQTTService } from "~/app/shared/services/mqtt.service";
 
 @Component({
     selector: "ns-topic-detail",

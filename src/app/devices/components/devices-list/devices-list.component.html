@@ -10,16 +10,16 @@
   <ScrollView class="page">
     <StackLayout>
       <CardView
-        *ngFor="let item of items"
+        *ngFor="let device of devices"
         class="card"
         elevation="40"
         radius="10"
-        [nsRouterLink]="['/item', item.id]"
+        [nsRouterLink]="[device.id]"
         ios:shadowRadius="3"
       >
         <StackLayout class="card-layout">
-          <Label class="h2" [text]="item.name"></Label>
-          <Label class="body" textWrap="true" [text]="item.role"></Label>
+          <Label class="h2" [text]="device.name"></Label>
+          <Label class="body" textWrap="true" [text]="device.role"></Label>
         </StackLayout>
       </CardView>
     </StackLayout>

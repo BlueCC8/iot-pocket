@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { TopicModel } from "../models/topic.model";
+import { TopicModel } from "../../models/topic.model";
 import { ListViewEventData, RadListView } from "nativescript-ui-listview";
 import { View } from "tns-core-modules/ui/core/view";
 import { Subscription } from "rxjs";
-import { MQTTService } from "../shared/services/mqtt.service";
+import { MQTTService } from "../../../shared/services/mqtt.service";
 import { Location } from "@angular/common";
 @Component({
     selector: "ns-topics-list",

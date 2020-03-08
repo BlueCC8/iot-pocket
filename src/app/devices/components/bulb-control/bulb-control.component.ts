@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { LightBulbCommandService } from "../shared/services/lightbulb-command.service";
-import { BluetoothService } from "../shared/services/bluetooth.service";
-import { Colors } from "../helpers/colors";
+import { LightBulbCommandService } from "../../services/lightbulb-command.service";
+import { BluetoothService } from "../../../shared/services/bluetooth.service";
+import { Colors } from "../../../helpers/colors";
 import { Slider } from "tns-core-modules/ui/slider/slider";
-import { SpinnerService } from "../shared/services/spinner.service";
-import { AlertService } from "../shared/services/alert.service";
+import { SpinnerService } from "../../../shared/services/spinner.service";
+import { AlertService } from "../../../shared/services/alert.service";
 import { Subscription } from "rxjs";
 
 @Component({
