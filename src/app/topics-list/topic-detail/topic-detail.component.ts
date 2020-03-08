@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { TopicModel } from "~/app/models/topic.model";
 import { MQTTService } from "~/app/shared/services/mqtt.service";
 import { Location } from "@angular/common";
@@ -38,8 +38,8 @@ export class TopicDetailComponent implements OnInit, OnDestroy {
         );
     }
     unsubscribeTopic() {
-        this.mqttService.unsubscribe(this.topic.topicName);
         this.location.back();
+        this.mqttService.unsubscribe(this.topic.topicName);
     }
     goBack() {
         this.location.back();

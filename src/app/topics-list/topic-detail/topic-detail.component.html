@@ -1,4 +1,7 @@
-<ActionBar title="Details {{ topic.topicName }}" class="action-bar">
+<ActionBar
+  title="Details {{ topic != undefined ? topic.topicName : '' }}"
+  class="action-bar"
+>
   <NavigationButton
     text="Go Back"
     android.systemIcon="ic_menu_back"
@@ -12,11 +15,13 @@
   </FlexboxLayout>
   <FlexboxLayout flexDirection="column" class="m-15">
     <StackLayout>
-      <Label
-        *ngFor="let messageItem of topic.messages"
-        class="h4 m-5"
-        text="{{ messageItem.message }} at {{ messageItem.date }}"
-      ></Label>
+      <ng-container *ngIf="topic != undefined">
+        <Label
+          *ngFor="let messageItem of topic.messages"
+          class="h4 m-5"
+          text="{{ messageItem.message }} at {{ messageItem.date }}"
+        ></Label>
+      </ng-container>
     </StackLayout>
     <Button
       text="Unsubscribe"

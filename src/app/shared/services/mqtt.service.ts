@@ -15,7 +15,6 @@ import { MessageModel } from "~/app/models/message.model";
 
 @Injectable()
 export class MQTTService {
-    topics: TopicModel[] = [];
     mqtt_username: string = "";
     mqtt_password: string = "";
     mqtt_topic: string = "";
@@ -47,13 +46,14 @@ export class MQTTService {
         this.mqtt_client = new MQTTClient(this.mqtt_clientOptions);
         this.setupHandlers();
     }
-    setTopics(topics: TopicModel[]) {
+    setTopics(topics: TopicModel[], sourceMethod?) {
+        console.log(sourceMethod);
         console.log("Service topics");
         console.log(topics);
         topics.forEach((topic: TopicModel, index) => {
             if (topic.id === null) {
                 topic.id = index + 1;
-                this.subscribe(topic.topicName);
+                this.subscribe(topic);
             }
         });
         this.topicsList = topics;
@@ -87,11 +87,11 @@ export class MQTTService {
 
             topicModel.topicName = topicName ? topicName : this.mqtt_topic;
             console.log("Unsubscribe=" + topicModel.topicName);
-            this.topics = this.topics.filter(
+            this.topicsList = this.topicsList.filter(
                 topic => topic.topicName !== topicModel.topicName
             );
 
-            this.setTopics([...this.topics]);
+            this.setTopics([...this.topicsList], "unsubscribe");
             this.mqtt_client.unsubscribe(topicModel.topicName);
             this.alertService.showSuccess(
                 "Unsubscribed topic:",
@@ -101,26 +101,21 @@ export class MQTTService {
             this.alertService.showError("Caught error: ", e);
         }
     }
-    subscribe(topicName?): void {
+    subscribe(topic: TopicModel): void {
         try {
             const opts: SubscribeOptions = {
                 qos: 0
             };
-            const topicModel = new TopicModel();
 
-            topicModel.topicName = topicName ? topicName : this.mqtt_topic;
-            console.log("Subscribe=" + topicModel.topicName);
-            topicModel.id = this.topics.push(topicModel);
-            topicModel.date = new Date()
+            topic.topicName = topic ? topic.topicName : this.mqtt_topic;
+            console.log("Subscribe=" + topic.topicName);
+            topic.date = new Date()
                 .toJSON()
                 .slice(0, 19)
                 .replace("T", " ");
-            this.setTopics([...this.topics]);
-            this.mqtt_client.subscribe(topicModel.topicName, opts);
-            this.alertService.showSuccess(
-                "Subscribed topic:",
-                topicModel.topicName
-            );
+            // this.setTopics([...this.topics], "subscribe");
+            this.mqtt_client.subscribe(topic.topicName, opts);
+            this.alertService.showSuccess("Subscribed topic:", topic.topicName);
         } catch (e) {
             this.alertService.showError("Caught error: ", e);
         }
@@ -158,10 +153,10 @@ export class MQTTService {
             );
             this.setServerStatus(true);
             this.spinnerService.setSpinner(false);
+            // this.subscribe(null);
             this.router.navigate(["home"], {
                 queryParams: { isConnected: true }
             });
-            this.subscribe();
         });
 
         this.mqtt_client.onConnectionLost.on(err => {
@@ -174,7 +169,10 @@ export class MQTTService {
         });
 
         this.mqtt_client.onMessageArrived.on((message: Message) => {
-            const changedTopics = [...this.topics];
+            const changedTopics = [...this.topicsList];
+            console.log("Mesage arrived");
+            console.log(this.topicsList);
+            console.log(changedTopics);
             changedTopics.forEach((topic: TopicModel) => {
                 if (topic.topicName === message.topic) {
                     const time = new Date()
@@ -186,10 +184,10 @@ export class MQTTService {
                     messageModel.message = message.payload;
                     messageModel.date = time;
                     topic.messages.push(messageModel);
-                    this.setTopics([...this.topics]);
                 }
             });
-            this.setTopics(changedTopics);
+
+            this.setTopics(changedTopics, "new message");
             this.alertService.showInfo("Message received: ", message.payload);
         });
 
