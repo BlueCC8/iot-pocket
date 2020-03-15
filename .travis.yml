@@ -1,3 +1,6 @@
+branches:
+  only:
+    - master
   env:
     global:
       - ANDROID_PACKAGE_NG='iot-pocket-debug-ng.apk'
@@ -41,7 +44,7 @@
           - cd ../publish && sh pack.sh
           - cd ../angular && tns plugin add ../publish/package/*.tgz
           - npm i && tns build android --bundle --env.uglify --env.snapshot --env.aot --copy-to "./outputs/app-debug.apk"
-          
+
       - os: linux
         env:
           - Android="28"
