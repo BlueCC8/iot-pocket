@@ -20,10 +20,10 @@ matrix:
       jdk: oraclejdk8
       before_script: pod repo update
       script:
-        - cd src && npm run build.iosOnly && npm pack
-        - cd ../demo-angular && tns plugin add ../src/*.tgz
-        - npm i && tns build ios --bundle --env.uglify --env.aot --copy-to "./outputs/angular.app"
-        - cd $IOS_PACKAGE_FOLDER_NG && zip -r $IOS_PACKAGE_NG demoangular.app
+        # - cd src && npm run build.iosOnly && npm pack
+        # - cd ../demo-angular && tns plugin add ../src/*.tgz
+        # - npm i && tns build ios --bundle --env.uglify --env.aot --copy-to "./outputs/angular.app"
+        # - cd $IOS_PACKAGE_FOLDER_NG && zip -r $IOS_PACKAGE_NG demoangular.app
     - language: android
       os: linux
       dist: trusty
@@ -33,10 +33,10 @@ matrix:
       jdk: oraclejdk8
       before_install: nvm install 10
       script:
-        - cd src && npm run build
-        - cd ../publish && sh pack.sh
-        - cd ../demo-angular && tns plugin add ../publish/package/*.tgz
-        - npm i && tns build android --bundle --env.uglify --env.snapshot --env.aot --copy-to "./outputs/app-debug.apk"
+        # - cd src && npm run build
+        # - cd ../publish && sh pack.sh
+        # - cd ../demo-angular && tns plugin add ../publish/package/*.tgz
+        # - npm i && tns build android --bundle --env.uglify --env.snapshot --env.aot --copy-to "./outputs/app-debug.apk"
     # - os: linux
     #   env:
     #     - Android="28"
