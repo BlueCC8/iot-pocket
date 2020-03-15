@@ -1,19 +1,82 @@
-language: node_js
-node_js:
-  - "10"
-dist: trusty
-sudo: required
-branches:
-  only:
-    - master
-before_script:
-  - npm install -g @angular/cli
-  - npm install -g nativescript
-  - npm install
-  - tns usage-reporting disable
-  - tns error-reporting disable
-script:
-  - tns platform add android
-  - tns build android
-  - tns platform add ios
-  - tns build ios
+  env:
+    global:
+      - ANDROID_PACKAGE_NG='iot-pocket-debug-ng.apk'
+      - ANDROID_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/angular/outputs
+      - IOS_PACKAGE_NG='iot-pocket-ng.zip'
+      - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/angular/outputs
+  
+  matrix:
+    include:
+      # - stage: "Lint"
+      #   language: node_js
+      #   os: linux
+      #   node_js: "10"
+      #   script: cd src && npm run ci.tslint && cd ../demo && npm run ci.tslint && cd ../demo-angular && npm run ci.tslint
+      - stage: "WebPack"
+        os: osx
+        env:
+          - WebpackiOS="12.0"
+          - Type="Angular"
+        osx_image: xcode10.2
+        language: node_js
+        node_js: "10"
+        jdk: oraclejdk8
+        before_script: pod repo update
+        script:
+          - cd src && npm run build.iosOnly && npm pack
+          - cd ../angular && tns plugin add ../src/*.tgz
+          - npm i && tns build ios --bundle --env.uglify --env.aot --copy-to "./outputs/demoangular.app"
+          - cd $IOS_PACKAGE_FOLDER_NG && zip -r $IOS_PACKAGE_NG demoangular.app
+
+     - language: android
+        os: linux
+        dist: trusty
+        env:
+          - WebpackAndroid="28"
+          - Type="Angular"
+        jdk: oraclejdk8
+        before_install: nvm install 10
+        script:
+          - cd src && npm run build
+          - cd ../publish && sh pack.sh
+          - cd ../angular && tns plugin add ../publish/package/*.tgz
+          - npm i && tns build android --bundle --env.uglify --env.snapshot --env.aot --copy-to "./outputs/app-debug.apk"
+          
+      - os: linux
+        env:
+          - Android="28"
+          - Type="Angular"
+        language: node_js
+        os: linux
+        node_js: "10"
+        script:
+          - npm i -g appium
+          - cd tests && npm i
+          - travis_wait travis_retry npm run e2e -- --runType android28 --sauceLab --appPath $ANDROID_PACKAGE_NG
+      - os: linux
+        env:
+          - iOS="12.0"
+          - Type="Angular"
+        language: node_js
+        node_js: "10"
+        script:
+          - npm i -g appium
+          - cd tests && npm i
+          - travis_wait travis_retry npm run e2e -- --runType sim12iPhoneX --sauceLab --appPath $IOS_PACKAGE_NG
+  
+  android:
+    components:
+      - tools
+      - platform-tools
+      - build-tools-28.0.3
+      - android-28
+      - extra-android-m2repository
+  
+  before_install:
+    - sudo pip install --upgrade pip
+    - sudo pip install six
+  
+  install:
+    - echo no | npm install -g nativescript
+    - tns usage-reporting disable
+    - tns error-reporting disable
