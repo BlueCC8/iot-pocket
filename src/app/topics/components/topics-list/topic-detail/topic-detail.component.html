@@ -1,0 +1,32 @@
+<ActionBar
+  title="Details {{ topic != undefined ? topic.topicName : '' }}"
+  class="action-bar"
+>
+  <NavigationButton
+    text="Go Back"
+    android.systemIcon="ic_menu_back"
+    (tap)="goBack()"
+  ></NavigationButton>
+</ActionBar>
+
+<FlexboxLayout flexDirection="column" class="page">
+  <FlexboxLayout flexDirection="row" class="m-15">
+    <Label class="h2" text="Messages"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="column" class="m-15">
+    <StackLayout>
+      <ng-container *ngIf="topic != undefined">
+        <Label
+          *ngFor="let messageItem of topic.messages"
+          class="h4 m-5"
+          text="{{ messageItem.message }} at {{ messageItem.date }}"
+        ></Label>
+      </ng-container>
+    </StackLayout>
+    <Button
+      text="Unsubscribe"
+      (tap)="unsubscribeTopic()"
+      class="-primary -rounded-sm m-t-10 "
+    ></Button>
+  </FlexboxLayout>
+</FlexboxLayout>

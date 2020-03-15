@@ -1,0 +1,71 @@
+<FlexboxLayout flexDirection="column" class="page" horizontalAlignment="center">
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
+  <FlexboxLayout flexDirection="row" *ngIf="!bulbConnected">
+    <Button
+      class="-primary -rounded-lg"
+      (tap)="connectToMagicBlue()"
+      text="Connect"
+    >
+    </Button>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
+    <Button
+      class="-primary -rounded-lg"
+      (tap)="disconnectToMagicBlue()"
+      text="Disconnect"
+    >
+    </Button>
+  </FlexboxLayout>
+  <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
+    <FlexboxLayout flexDirection="column">
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="redValue"
+        backgroundColor="red"
+        class="red"
+      >
+      </Slider>
+
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="greenValue"
+        backgroundColor="green"
+        class="green"
+      >
+      </Slider>
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="blueValue"
+        backgroundColor="blue"
+        class="blue"
+      >
+      </Slider>
+
+      <Slider
+        [minValue]="minValue"
+        [maxValue]="maxValue"
+        [(ngModel)]="whiteValue"
+        class="white"
+      >
+      </Slider>
+
+      <Button class="btn btn-secondary" (tap)="updateLightBulb()" text="Apply">
+      </Button>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <!-- <ActivityIndicator
+    [busy]="isLoading"
+    horizontalAlignment="center"
+    verticalAlignment="center"
+  >
+  </ActivityIndicator> -->
+</FlexboxLayout>

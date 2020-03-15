@@ -1,0 +1,118 @@
+<ActionBar
+  title="MQTT Server details"
+  class=" -primary text-center text-uppercase"
+>
+  <NavigationButton
+    text="Go Back"
+    android.systemIcon="ic_menu_back"
+    (tap)="goBack()"
+  ></NavigationButton>
+</ActionBar>
+<ScrollView class="page">
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
+  <StackLayout class="home-panel nt-form">
+    <StackLayout class="nt-input">
+      <Label text="MQTT Host name" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.host"
+        hint="Enter a MQTT Host name"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Port number" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.port"
+        hint="Mqtt port"
+        class="input -border"
+        keyboardType="number"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Path" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.path"
+        hint="Enter a MQTT path"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+
+    <StackLayout class="nt-input">
+      <Label text="MQTT Main Topic" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.topic"
+        hint="Enter a main topic"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+    <StackLayout class="nt-input">
+      <Label text="MQTT Username" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.username"
+        hint="username"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+
+    <StackLayout class="nt-input">
+      <Label text="MQTT Password" class="font-weight-bold m-b-5"></Label>
+      <TextField
+        [(ngModel)]="serverModel.password"
+        secure="true"
+        hint="Password"
+        class="input -border"
+      ></TextField>
+    </StackLayout>
+
+    <FlexboxLayout
+      flexDirection="row"
+      alignContent="center"
+      justifyContent="center"
+      class="nt-input"
+    >
+      <StackLayout class="nt-input">
+        <Label text="Use SSL" class="font-weight-bold labels_center"></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.useSSL"
+          class="switch"
+        ></Switch>
+      </StackLayout>
+      <StackLayout class="nt-input">
+        <Label
+          text="Clean Session"
+          class="font-weight-bold labels_center"
+        ></Label>
+        <Switch
+          checked="false"
+          [(ngModel)]="serverModel.cleanSession"
+          class="switch m-b-30"
+        ></Switch>
+      </StackLayout>
+    </FlexboxLayout>
+
+    <StackLayout class="hr-light"></StackLayout>
+    <FlexboxLayout
+      flexDirection="row"
+      alignContent="center"
+      justifyContent="center"
+    >
+      <Button
+        text="Submit"
+        (tap)="save()"
+        class="-primary -rounded-sm"
+      ></Button>
+      <Button
+        text="Reset"
+        (tap)="removeAll()"
+        class="-secondary -rounded-sm"
+      ></Button>
+    </FlexboxLayout>
+  </StackLayout>
+</ScrollView>

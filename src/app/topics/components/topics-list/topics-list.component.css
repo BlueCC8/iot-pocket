@@ -1,0 +1,25 @@
+.card {
+  background-color: #fff;
+  color: #4d4d4d;
+  margin: 15 15 0;
+}
+.card-layout {
+  padding: 20;
+}
+.card-layout .h1 {
+  margin-bottom: 15;
+}
+.home-panel {
+  font-size: 16;
+  margin: 15;
+}
+
+.hr-light {
+  margin: 10;
+}
+.labels_center {
+  align-self: center;
+}
+.nt-input {
+  margin: 0;
+}

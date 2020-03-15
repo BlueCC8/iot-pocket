@@ -1,0 +1,84 @@
+<FlexboxLayout
+  class="page"
+  flexDirection="column"
+  alignContent="center"
+  justifyContent="space-around"
+>
+  <ActivityIndicator
+    height="50"
+    width="50"
+    *ngIf="isLoading"
+    [busy]="isLoading"
+  >
+  </ActivityIndicator>
+  <FlexboxLayout
+    flexDirection="column"
+    alignContent="center"
+    justifyContent="center"
+  >
+    <Image
+      src="~/assets/logo.png"
+      height="400px"
+      width="400px"
+      loadMode="async"
+      stretch="aspectFit"
+    ></Image>
+    <Label class="header" text="IoT Pocket"></Label>
+  </FlexboxLayout>
+  <FlexboxLayout
+    flexDirection="column"
+    alignContent="center"
+    justifyContent="center"
+  >
+    <Label [text]="isConnected" class="font-weight-bold m-b-5"></Label>
+    <Button
+      *ngIf="isConnected"
+      text="home works!"
+      class="-primary -rounded-lg"
+      text="Disconnect"
+      (tap)="disconnect()"
+      style="vertical-align: center;"
+    ></Button>
+
+    <Button
+      *ngIf="isConnected"
+      class="-secondary -rounded-lg"
+      [nsRouterLink]="['/devices']"
+      text="Devices"
+      style="vertical-align: center;"
+    >
+    </Button>
+    <Button
+      *ngIf="isConnected"
+      class="-secondary -rounded-lg"
+      text="Send message"
+      (tap)="sendMessage(topics)"
+      style="vertical-align: center;"
+    >
+    </Button>
+    <Button
+      *ngIf="isConnected"
+      class="-secondary -rounded-lg"
+      text="View Topics"
+      [nsRouterLink]="['/topics']"
+      style="vertical-align: center;"
+    >
+    </Button>
+    <Button
+      *ngIf="!isConnected"
+      text="home works!"
+      class="-primary -rounded-lg"
+      text="Connect to the MQTT server"
+      [nsRouterLink]="['/server']"
+      style="vertical-align: center;"
+    ></Button>
+  </FlexboxLayout>
+</FlexboxLayout>
+<!--
+  <ActivityIndicator
+    [busy]="loading"
+    horizontalAlignment="center"
+    verticalAlignment="center"
+  >
+  </ActivityIndicator>
+</FlexboxLayout> -->
