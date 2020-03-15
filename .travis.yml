@@ -67,10 +67,6 @@ android:
     - android-28
     - extra-android-m2repository
 
-before_install:
-  - sudo pip install --upgrade pip
-  - sudo pip install six
-
 install:
   - echo no | npm install -g nativescript
   - tns usage-reporting disable
