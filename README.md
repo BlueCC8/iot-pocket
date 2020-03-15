@@ -1,6 +1,6 @@
 # Project Title - IoT Pocket
 
-## [![Known Vulnerabilities](https://snyk.io/test/github/BlueCC8/iot-pocket/badge.svg)](https://snyk.io/test/github/BlueCC8/iot-pocket)
+## [![Build Status](https://travis-ci.com/BlueCC8/iot-pocket.svg?token=wimezKrCqyRNdiZF2Tdi&branch=master)](https://travis-ci.com/BlueCC8/iot-pocket) [![Known Vulnerabilities](https://snyk.io/test/github/BlueCC8/iot-pocket/badge.svg)](https://snyk.io/test/github/BlueCC8/iot-pocket)
 
 ### Idea - Implementation of IoT protocols (MQTT, BLE and other) for integration with different smart devices.
 

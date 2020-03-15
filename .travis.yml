@@ -9,8 +9,11 @@ branches:
 before_script:
   - npm install -g @angular/cli
   - npm install -g nativescript
+  - npm install
   - tns usage-reporting disable
   - tns error-reporting disable
 script:
-  - npm i && tns platform add android && tns build android
-  - tns platform add ios && tns build ios
+  - tns platform add android
+  - tns build android
+  - tns platform add ios
+  - tns build ios
