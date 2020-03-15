@@ -9,7 +9,7 @@ env:
     - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/demo-angular/outputs
 
 matrix:
- include:
+  include:
     - os: osx
       env:
         - WebpackiOS="12.0"
@@ -29,18 +29,6 @@ matrix:
       dist: trusty
       env:
         - WebpackAndroid="28"
-        - Type="VanillaJS"
-      jdk: oraclejdk8
-      before_install: nvm install 10
-      script:
-        - cd src && npm run build
-        - cd ./demo && npm i && tns build android --bundle --env.uglify --env.snapshot --copy-to "./outputs/app-debug.apk"
-        - "curl -u $SAUCE_USER:$SAUCE_KEY -X POST -H 'Content-Type: application/octet-stream' $SAUCE_STORAGE/$ANDROID_PACKAGE_JS?overwrite=true --data-binary @$ANDROID_PACKAGE_FOLDER_JS/app-debug.apk"
-    - language: android
-      os: linux
-      dist: trusty
-      env:
-        - WebpackAndroid="28"
         - Type="Angular"
       jdk: oraclejdk8
       before_install: nvm install 10
@@ -49,27 +37,27 @@ matrix:
         - cd ../publish && sh pack.sh
         - cd ../demo-angular && tns plugin add ../publish/package/*.tgz
         - npm i && tns build android --bundle --env.uglify --env.snapshot --env.aot --copy-to "./outputs/app-debug.apk"
-    - os: linux
-      env:
-        - Android="28"
-        - Type="Angular"
-      language: node_js
-      os: linux
-      node_js: "10"
-      script:
-        - npm i -g appium
-        - cd tests && npm i
-        - travis_wait travis_retry npm run e2e -- --runType android28 --sauceLab --appPath $ANDROID_PACKAGE_NG
-    - os: linux
-      env:
-        - iOS="12.0"
-        - Type="Angular"
-      language: node_js
-      node_js: "10"
-      script:
-        - npm i -g appium
-        - cd tests && npm i
-        - travis_wait travis_retry npm run e2e -- --runType sim12iPhoneX --sauceLab --appPath $IOS_PACKAGE_NG
+    # - os: linux
+    #   env:
+    #     - Android="28"
+    #     - Type="Angular"
+    #   language: node_js
+    #   os: linux
+    #   node_js: "10"
+    #   script:
+    #     - npm i -g appium
+    #     - cd tests && npm i
+    #     - travis_wait travis_retry npm run e2e -- --runType android28 --sauceLab --appPath $ANDROID_PACKAGE_NG
+    # - os: linux
+    #   env:
+    #     - iOS="12.0"
+    #     - Type="Angular"
+    #   language: node_js
+    #   node_js: "10"
+    #   script:
+    #     - npm i -g appium
+    #     - cd tests && npm i
+    #     - travis_wait travis_retry npm run e2e -- --runType sim12iPhoneX --sauceLab --appPath $IOS_PACKAGE_NG
 
 android:
   components:
