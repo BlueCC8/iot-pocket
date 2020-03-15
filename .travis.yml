@@ -1,12 +1,12 @@
 branches:
   only:
     - master
-env:
-  global:
-    - ANDROID_PACKAGE_NG='iot-pocket-ng.apk'
-    - ANDROID_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/angular/outputs
-    - IOS_PACKAGE_NG='iot-pocket-ng.zip'
-    - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/demo-angular/outputs
+# env:
+#   global:
+#     - ANDROID_PACKAGE_NG='iot-pocket-ng.apk'
+#     - ANDROID_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/angular/outputs
+#     - IOS_PACKAGE_NG='iot-pocket-ng.zip'
+#     - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/demo-angular/outputs
 
 matrix:
   include:
