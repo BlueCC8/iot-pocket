@@ -8,6 +8,11 @@
       "version": "6.1.2"
     }
   },
+  "scripts": {
+    "tslint": "tslint \"app/**/*.ts\"",
+    "docs": "node_modules/.bin/compodoc -p tsconfig.json -d ../docs/",
+    "serve-docs": "node_modules/.bin/compodoc -s -d ../docs/"
+  },
   "description": "Iot Pocket",
   "license": "SEE LICENSE IN LICENCE",
   "repository": "https://github.com/BlueCC8/iot-pocket.git",
@@ -38,7 +43,8 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "~8.2.0",
-    "@ngtools/webpack": "~8.2.0",
+    "@ngtools/webpack": "^9.0.6",
+    "compodoc": "0.0.41",
     "nativescript-dev-webpack": "~1.2.0",
     "typescript": "~3.5.3"
   },

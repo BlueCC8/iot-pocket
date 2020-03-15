@@ -16,4 +16,4 @@ const routes: Routes = [
     ],
     exports: [NativeScriptRouterModule]
 })
-export class TopicsRoutingModule {}
+export class DevicesRoutingModule {}
