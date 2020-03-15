@@ -5,25 +5,26 @@ env:
   global:
     - ANDROID_PACKAGE_NG='iot-pocket-ng.apk'
     - ANDROID_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/angular/outputs
-    # - IOS_PACKAGE_NG='iot-pocket-ng.zip'
-    # - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/demo-angular/outputs
+    - IOS_PACKAGE_NG='iot-pocket-ng.zip'
+    - IOS_PACKAGE_FOLDER_NG=$TRAVIS_BUILD_DIR/demo-angular/outputs
 
 matrix:
   include:
-    # - os: osx
-    #   env:
-    #     - WebpackiOS="12.0"
-    #     - Type="Angular"
-    #   osx_image: xcode10.2
-    #   language: node_js
-    #   node_js: "10"
-    #   jdk: oraclejdk8
-    #   before_script: pod repo update
-    #   script:
-    # - cd src && npm run build.iosOnly && npm pack
-    # - cd ../demo-angular && tns plugin add ../src/*.tgz
-    # - npm i && tns build ios --bundle --env.uglify --env.aot --copy-to "./outputs/angular.app"
-    # - cd $IOS_PACKAGE_FOLDER_NG && zip -r $IOS_PACKAGE_NG demoangular.app
+    - os: osx
+      env:
+        - WebpackiOS="12.0"
+        - Type="Angular"
+      osx_image: xcode10.2
+      language: node_js
+      node_js: "10"
+      jdk: oraclejdk8
+      before_script: pod repo update
+      script:
+        - true
+        # - cd src && npm run build.iosOnly && npm pack
+        # - cd ../demo-angular && tns plugin add ../src/*.tgz
+        # - npm i && tns build ios --bundle --env.uglify --env.aot --copy-to "./outputs/angular.app"
+        # - cd $IOS_PACKAGE_FOLDER_NG && zip -r $IOS_PACKAGE_NG demoangular.app
     - language: android
       os: linux
       dist: trusty
@@ -33,6 +34,7 @@ matrix:
       jdk: oraclejdk8
       before_install: nvm install 10
       script:
+        - true
         # - cd src && npm run build
         # - cd ../publish && sh pack.sh
         # - cd ../demo-angular && tns plugin add ../publish/package/*.tgz
