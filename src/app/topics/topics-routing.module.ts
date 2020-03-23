@@ -4,7 +4,7 @@ import { Routes } from "@angular/router";
 import { TopicDetailComponent } from "./components/topics-list/topic-detail/topic-detail.component";
 import { TopicsListComponent } from "./components/topics-list/topics-list.component";
 
-const routes: Routes = [
+const TOPICS_ROUTES: Routes = [
     { path: "", component: TopicsListComponent },
     { path: ":id", component: TopicDetailComponent }
 ];
@@ -12,7 +12,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         NativeScriptRouterModule,
-        NativeScriptRouterModule.forChild(routes)
+        NativeScriptRouterModule.forChild(TOPICS_ROUTES)
     ],
     exports: [NativeScriptRouterModule]
 })

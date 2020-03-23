@@ -1,16 +1,17 @@
 import { Injectable } from "@angular/core";
-import { BleDevice } from "../../models/ble-device.model";
+import { BleDevice } from "../models/ble-device.model";
 import { Bluetooth } from "nativescript-bluetooth/bluetooth";
 import { AlertService } from "./alert.service";
 
 @Injectable()
 export class BluetoothService {
-    bluetooth: Bluetooth = new Bluetooth();
-    bleDevicesAround: Array<BleDevice> = new Array();
+    private bluetooth: Bluetooth = new Bluetooth();
+    public bleDevicesAround: Array<BleDevice> = new Array();
+    private scanTime = 3;
 
     constructor(private alertService: AlertService) {}
     write(bluetoothMessage): void {
-        console.log("Writing message: " + JSON.stringify(bluetoothMessage));
+        // console.log("Writing message: " + JSON.stringify(bluetoothMessage));
 
         this.bluetooth.write(bluetoothMessage).then(
             result => console.log("Value written " + JSON.stringify(result)),
@@ -34,6 +35,9 @@ export class BluetoothService {
         return this.bluetooth.connect({
             UUID: UUID,
             onConnected: peripheral => {
+                this.alertService.showSuccess(
+                    "Periperhal connected with UUID: " + peripheral.UUID
+                );
                 console.log(
                     "Periperhal connected with UUID: " + peripheral.UUID
                 );
@@ -43,6 +47,9 @@ export class BluetoothService {
             },
             onDisconnected: peripheral => {
                 console.log(
+                    "Periperhal disconnected with UUID: " + peripheral.UUID
+                );
+                this.alertService.showWarning(
                     "Periperhal disconnected with UUID: " + peripheral.UUID
                 );
             }
@@ -63,7 +70,7 @@ export class BluetoothService {
         return this.bluetooth
             .startScanning({
                 // serviceUUIDs: [],
-                seconds: 3,
+                seconds: this.scanTime,
                 onDiscovered: device => {
                     console.log("UUID: " + device.UUID);
                     console.log("Name: " + device.name);

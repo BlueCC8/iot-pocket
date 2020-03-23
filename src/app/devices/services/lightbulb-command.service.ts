@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { BluetoothService } from "../../shared/services/bluetooth.service";
-import { BleDevice } from "../../models/ble-device.model";
-import { HexHelper } from "../../helpers/hex-helper";
+import { BleDevice } from "../../shared/models/ble-device.model";
+import { HexHelper } from "../../shared/helpers/hex-helper";
 import { Subject, BehaviorSubject } from "rxjs";
 import { AlertService } from "../../shared/services/alert.service";
 import { SpinnerService } from "../../shared/services/spinner.service";
+import { BleMessage } from "../../shared/models/ble-message.model";
 
 @Injectable()
 export class LightBulbCommandService {
-    magicBlue: BleDevice;
+    private magicBlue: BleDevice;
+
     private stateMagicBlue = new BehaviorSubject<BleDevice>(null);
     public stateMagicBlueUpdated = this.stateMagicBlue.asObservable();
 
@@ -21,19 +23,20 @@ export class LightBulbCommandService {
         private spinnerService: SpinnerService
     ) {}
 
-    connectToMagicBlue() {
+    connectToMagicBlue(): void {
         this.bluetoothService.scan().then(() => {
-            console.log("Scanning completed");
+            // console.log("Scanning completed");
             const magicblue = this.getMagicBlue();
+
             this.magicBlue = magicblue;
             this.stateMagicBlue.next(magicblue);
 
             if (this.magicBlue) {
-                console.log("Magic blue found");
+                // console.log("Magic blue found");
                 this.bluetoothService
                     .connect(this.magicBlue.UUID)
                     .then(device => {
-                        console.log("Connected: " + JSON.stringify(device));
+                        // console.log("Connected: " + JSON.stringify(device));
                         this.alertService.showSuccess(
                             "Success",
                             "Successfully conected to the lightbulb "
@@ -50,7 +53,7 @@ export class LightBulbCommandService {
             }
         });
     }
-    disconnectToMagicBlue(magicBlue) {
+    disconnectMagicBlue(magicBlue: BleDevice): void {
         if (magicBlue) {
             console.log("Magic blue found");
             try {
@@ -71,25 +74,25 @@ export class LightBulbCommandService {
         }
     }
 
-    update(red: number, green: number, blue: number, white: number) {
+    update(red: number, green: number, blue: number, white: number): void {
         if (!this.magicBlue) {
             this.alertService.showError("Not connected to device");
             return;
         }
-        console.log("color=" + [56, red, green, blue, white, 240, 170]);
+        // console.log("color=" + [56, red, green, blue, white, 240, 170]);
         let color = [86, red, green, blue, white, 240, 170]
             .map(param => {
                 return this.convertToHexString(param);
             })
             .join("");
         color = HexHelper.hex2a(color);
-        console.log("Updating the color:" + HexHelper.hex2a(color));
+        // console.log("Updating the color:" + HexHelper.hex2a(color));
 
         const updateMessage = this.getMessage(this.magicBlue.UUID, color);
         this.bluetoothService.write(updateMessage);
     }
 
-    getMessage(UUID: string, value: string): any {
+    getMessage(UUID: string, value: string): BleMessage {
         return {
             peripheralUUID: UUID,
             serviceUUID: "ffe5",

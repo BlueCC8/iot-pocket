@@ -16,9 +16,10 @@ import { Location } from "@angular/common";
     styleUrls: ["./server-details.component.css"]
 })
 export class ServerDetailsComponent implements OnInit, OnDestroy {
-    isLoading: boolean = false;
-    subs: Subscription[] = [];
-    serverModel: ServerModel = new ServerModel(null);
+    public isLoading = false;
+    private subs: Subscription[] = [];
+    public serverModel: ServerModel = new ServerModel(null);
+
     constructor(
         private spinnerService: SpinnerService,
         private mqttService: MQTTService,

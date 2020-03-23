@@ -5,7 +5,7 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { ServerDetailsComponent } from "./server-details/server-details.component";
 
-const routes: Routes = [
+const APP_ROUTES: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "home", component: HomeComponent },
     { path: "devices", loadChildren: "./devices/devices.module#DevicesModule" },
@@ -16,7 +16,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         NativeScriptRouterModule,
-        NativeScriptRouterModule.forRoot(routes)
+        NativeScriptRouterModule.forRoot(APP_ROUTES)
     ],
     exports: [NativeScriptRouterModule]
 })

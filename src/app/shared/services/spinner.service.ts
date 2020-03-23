@@ -6,7 +6,7 @@ export class SpinnerService {
     private spinnerActive = new Subject<boolean>();
     public spinnerUpdated = this.spinnerActive.asObservable();
 
-    public setSpinner(state: boolean) {
+    public setSpinner(state: boolean): void {
         this.spinnerActive.next(state);
     }
 }

@@ -5,7 +5,17 @@ export class TopicModel {
     topicName = "";
     messages: MessageModel[] = [];
     messagesTime: string[];
-    date?: string = "";
+    date = "";
 
-    constructor() {}
+    constructor(jsonObj) {
+        if (jsonObj) {
+            Object.assign(this, {
+                id: jsonObj.id,
+                topicName: jsonObj.topicName,
+                messages: jsonObj.messages,
+                messagesTime: jsonObj.messagesTime,
+                date: jsonObj.date
+            });
+        }
+    }
 }

@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { LightBulbCommandService } from "../../services/lightbulb-command.service";
 import { BluetoothService } from "../../../shared/services/bluetooth.service";
-import { Colors } from "../../../helpers/colors";
-import { Slider } from "tns-core-modules/ui/slider/slider";
+import { Colors } from "../../../shared/helpers/enum.helper";
 import { SpinnerService } from "../../../shared/services/spinner.service";
-import { AlertService } from "../../../shared/services/alert.service";
-import { Subscription } from "rxjs";
+import { Subscription } from "rxjs/internal/Subscription";
 
 @Component({
     moduleId: module.id,
@@ -28,23 +26,22 @@ export class BulbControlComponent implements OnInit, OnDestroy {
     bulbConnected = false;
     magicBlue: any;
     subs: Subscription[] = [];
+
     constructor(
         private lightBulbCommandService: LightBulbCommandService,
         private bluetoothService: BluetoothService,
-        private spinnerService: SpinnerService,
-        private alertService: AlertService
+        private spinnerService: SpinnerService
     ) {}
-    connectToMagicBlue() {
+    connectToMagicBlue(): void {
         this.spinnerService.setSpinner(true);
-        console.log("Connecting to device");
         this.lightBulbCommandService.connectToMagicBlue();
     }
-    disconnectToMagicBlue() {
+    disconnectToMagicBlue(): void {
         this.spinnerService.setSpinner(true);
-        this.lightBulbCommandService.disconnectToMagicBlue(this.magicBlue);
+        this.lightBulbCommandService.disconnectMagicBlue(this.magicBlue);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.subs.push(
             this.lightBulbCommandService.stateBulbUpdated.subscribe(
                 bulbConnected => {
@@ -67,8 +64,7 @@ export class BulbControlComponent implements OnInit, OnDestroy {
         this.bluetoothService.fixLocationPermission();
     }
 
-    updateLightBulb() {
-        console.log("Update color");
+    updateLightBulb(): void {
         this.lightBulbCommandService.update(
             this.redValue,
             this.greenValue,
@@ -76,7 +72,7 @@ export class BulbControlComponent implements OnInit, OnDestroy {
             this.whiteValue
         );
     }
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subs.forEach(sub => sub.unsubscribe());
     }
 }

@@ -10,7 +10,7 @@ import { DevicesService } from "../../services/devices.service";
     templateUrl: "./device-detail.component.html"
 })
 export class DeviceDetailComponent implements OnInit {
-    device: Device;
+    public device: Device;
 
     constructor(
         private devicesService: DevicesService,
@@ -22,7 +22,7 @@ export class DeviceDetailComponent implements OnInit {
         const id = +this.route.snapshot.params.id;
         this.device = this.devicesService.getDevice(id);
     }
-    goBack() {
+    goBack(): void {
         this.location.back();
     }
 }

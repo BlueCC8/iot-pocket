@@ -14,8 +14,8 @@ registerElement("CardView", () => CardView);
     styleUrls: ["./devices-list.component.css"]
 })
 export class DevicesListComponent implements OnInit {
-    devices: Array<Device>;
-    data = [];
+    public devices: Array<Device>;
+    public data = [];
     constructor(
         private devicesService: DevicesService,
         private location: Location
@@ -24,7 +24,7 @@ export class DevicesListComponent implements OnInit {
     ngOnInit(): void {
         this.devices = this.devicesService.getDevices();
     }
-    goBack() {
+    goBack(): void {
         this.location.back();
     }
 }

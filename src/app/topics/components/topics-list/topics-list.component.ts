@@ -11,19 +11,20 @@ import { Location } from "@angular/common";
     styleUrls: ["./topics-list.component.css"]
 })
 export class TopicsListComponent implements OnInit, OnDestroy {
-    topicName = "";
-    newTopicName = "";
-    isLoading = false;
-    listLoaded = false;
-    topicsList: TopicModel[] = [];
-    subs: Subscription[] = [];
+    public topicName = "";
+    public newTopicName = "";
+    public isLoading = false;
+    public listLoaded = false;
+    public topicsList: TopicModel[] = [];
+
+    private subs: Subscription[] = [];
+
     constructor(private mqttService: MQTTService, private location: Location) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         const firstLoaded = this.mqttService.topicsList;
         this.topicsList = firstLoaded;
-        console.log("First loaded");
-        console.log(firstLoaded);
+
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
                 console.log("Topics updated");
@@ -33,28 +34,28 @@ export class TopicsListComponent implements OnInit, OnDestroy {
         );
     }
 
-    add() {
+    add(): void {
         if (this.newTopicName.trim() === "") {
             alert("Enter a topic item");
             return;
         }
-        const topicModel = new TopicModel();
+        const topicModel = new TopicModel(null);
         topicModel.topicName = this.newTopicName;
         this.topicsList.push(topicModel);
         this.mqttService.setTopics(this.topicsList);
         this.newTopicName = "";
     }
-    delete(args: ListViewEventData) {
+    delete(args: ListViewEventData): void {
         let topic = <TopicModel>args.object.bindingContext;
         let index = this.topicsList.indexOf(topic);
 
         this.topicsList.splice(index, 1);
         this.mqttService.setTopics(this.topicsList);
     }
-    goBack() {
+    goBack(): void {
         this.location.back();
     }
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subs.forEach(sub => sub.unsubscribe());
     }
 }
