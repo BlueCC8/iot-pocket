@@ -53,7 +53,7 @@ export class LightBulbCommandService {
             }
         });
     }
-    disconnectMagicBlue(magicBlue: BleDevice): void {
+    disconnect(magicBlue: BleDevice): void {
         if (magicBlue) {
             console.log("Magic blue found");
             try {

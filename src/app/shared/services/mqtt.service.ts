@@ -16,11 +16,11 @@ import { QualityOfService } from "~/app/shared/helpers/enum.helper";
 
 @Injectable()
 export class MQTTService {
-    username = "";
-    password = "";
-    topic = "";
-    clientOptions: ClientOptions;
-    client: MQTTClient;
+    private username = "";
+    private password = "";
+    private topic = "";
+    private clientOptions: ClientOptions;
+    private client: MQTTClient;
 
     private mqttServerActive = new Subject<boolean>();
     public mqttServerUpdated = this.mqttServerActive.asObservable();
@@ -39,12 +39,12 @@ export class MQTTService {
         username = "",
         password = "",
         topic = "",
-        mqtt_clientOptions: ClientOptions
+        clientOptions: ClientOptions
     ) {
         this.username = username;
         this.password = password;
         this.topic = topic;
-        this.clientOptions = mqtt_clientOptions;
+        this.clientOptions = clientOptions;
         this.client = new MQTTClient(this.clientOptions);
 
         this.setupHandlers();

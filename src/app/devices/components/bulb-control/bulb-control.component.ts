@@ -14,7 +14,6 @@ import { Subscription } from "rxjs/internal/Subscription";
 export class BulbControlComponent implements OnInit, OnDestroy {
     maxValue = 255;
     minValue = 0;
-    Colors = Colors;
     redValue = 128;
     redValueTextField = "";
     greenValueTextField = "";
@@ -24,21 +23,21 @@ export class BulbControlComponent implements OnInit, OnDestroy {
     whiteValue = 100;
     isLoading = false;
     bulbConnected = false;
-    magicBlue: any;
-    subs: Subscription[] = [];
+    private magicBlue: any;
+    private subs: Subscription[] = [];
 
     constructor(
         private lightBulbCommandService: LightBulbCommandService,
         private bluetoothService: BluetoothService,
         private spinnerService: SpinnerService
     ) {}
-    connectToMagicBlue(): void {
+    connectToBulb(): void {
         this.spinnerService.setSpinner(true);
         this.lightBulbCommandService.connectToMagicBlue();
     }
-    disconnectToMagicBlue(): void {
+    disconnectBulb(): void {
         this.spinnerService.setSpinner(true);
-        this.lightBulbCommandService.disconnectMagicBlue(this.magicBlue);
+        this.lightBulbCommandService.disconnect(this.magicBlue);
     }
 
     ngOnInit(): void {

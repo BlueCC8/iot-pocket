@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
 })
 export class AppComponent implements OnInit, OnDestroy {
     isLoading = false;
-    subs: Subscription[] = [];
+    private subs: Subscription[] = [];
     constructor(private spinnerService: SpinnerService) {}
 
     ngOnInit(): void {
