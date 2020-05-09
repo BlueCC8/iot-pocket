@@ -11,9 +11,10 @@ import { MQTTService } from "~/app/shared/services/mqtt.service";
     templateUrl: "./topic-detail.component.html"
 })
 export class TopicDetailComponent implements OnInit, OnDestroy {
-    topic: TopicModel;
-    subs: Subscription[] = [];
-    topicsList: TopicModel[] = [];
+    public topic: TopicModel;
+    private subs: Subscription[] = [];
+    public topicsList: TopicModel[] = [];
+
     constructor(
         private mqttService: MQTTService,
         private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class TopicDetailComponent implements OnInit, OnDestroy {
         this.topicsList = firstLoaded;
 
         this.topic = this.topicsList.find(topic => topic.id === id);
+
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
                 console.log("Topics detail updated");
@@ -38,14 +40,14 @@ export class TopicDetailComponent implements OnInit, OnDestroy {
             })
         );
     }
-    unsubscribeTopic() {
+    unsubscribeTopic(): void {
         this.location.back();
         this.mqttService.unsubscribe(this.topic.topicName);
     }
-    goBack() {
+    goBack(): void {
         this.location.back();
     }
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subs.forEach(sub => sub.unsubscribe());
     }
 }

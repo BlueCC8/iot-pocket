@@ -1,32 +1,25 @@
 export class ServerModel {
-    host: string;
-    port: number;
-    useSSL: boolean;
-    path: string;
-    username: string;
-    password: string;
-    topic: string;
-    cleanSession: boolean;
+    host = "broker.mqttdashboard.com";
+    port = 8000;
+    useSSL = false;
+    path = "/mqtt";
+    username = "";
+    password = "";
+    topic = "DefaultTopic";
+    cleanSession = true;
 
     constructor(jsonObj) {
         if (jsonObj) {
-            this.host = jsonObj.host;
-            this.port = jsonObj.port;
-            this.useSSL = jsonObj.useSSL;
-            this.path = jsonObj.ath;
-            this.username = jsonObj.username;
-            this.password = jsonObj.password;
-            this.topic = jsonObj.topic;
-            this.cleanSession = jsonObj.cleanSession;
-        } else {
-            this.host = "broker.mqttdashboard.com";
-            this.port = 8000;
-            this.useSSL = false;
-            this.path = "/mqtt";
-            this.username = "";
-            this.password = "";
-            this.topic = "DefaultTopic";
-            this.cleanSession = true;
+            Object.assign(this, {
+                host: jsonObj.host,
+                port: jsonObj.port,
+                useSSL: jsonObj.useSSL,
+                path: jsonObj.path,
+                username: jsonObj.username,
+                password: jsonObj.password,
+                topic: jsonObj.topic,
+                cleanSession: jsonObj.cleanSession
+            });
         }
     }
 }

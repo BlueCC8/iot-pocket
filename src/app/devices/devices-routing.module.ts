@@ -4,7 +4,7 @@ import { Routes } from "@angular/router";
 import { DevicesListComponent } from "./components/devices-list/devices-list.component";
 import { DeviceDetailComponent } from "./components/device-detail/device-detail.component";
 
-const routes: Routes = [
+const DEVICES_ROUTES: Routes = [
     { path: "", component: DevicesListComponent },
     { path: ":id", component: DeviceDetailComponent }
 ];
@@ -12,7 +12,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         NativeScriptRouterModule,
-        NativeScriptRouterModule.forChild(routes)
+        NativeScriptRouterModule.forChild(DEVICES_ROUTES)
     ],
     exports: [NativeScriptRouterModule]
 })

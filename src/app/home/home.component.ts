@@ -11,21 +11,24 @@ import { ActivatedRoute } from "@angular/router";
     styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    isLoading: boolean = false;
-    isConnected: boolean = false;
-    subs: Subscription[] = [];
-    topics: TopicModel[] = [];
-    selectedTopic = "";
+    public isLoading = false;
+    public isConnected = false;
+
+    private subs: Subscription[] = [];
+    public topics: TopicModel[] = [];
+    public selectedTopic = "";
+
     constructor(
         private mqttService: MQTTService,
         private spinnerService: SpinnerService,
         private route: ActivatedRoute
     ) {}
-    ngOnInit() {
+    ngOnInit(): void {
         const { queryParams } = this.route.snapshot;
         this.isConnected = queryParams["isConnected"]
             ? queryParams["isConnected"]
             : false;
+
         this.subs.push(
             this.mqttService.mqttServerUpdated.subscribe(
                 (statusServer: boolean) => {
@@ -39,23 +42,23 @@ export class HomeComponent implements OnInit, OnDestroy {
             )
         );
         const firstLoaded = this.mqttService.topicsList;
-        console.log("Home first loaded");
+
         this.topics = firstLoaded;
         this.subs.push(
             this.mqttService.topicsUpdated.subscribe(loadedTopics => {
-                // console.log("Home loaded");
-                // console.log(loadedTopics);
                 this.topics = loadedTopics;
             })
         );
     }
-    sendMessage(topics) {
+    sendMessage(topics): void {
         const topicsNames = [];
+
         topics.forEach((topic: TopicModel) => {
             if (topicsNames.indexOf(topic.topicName) == -1) {
                 topicsNames.push(topic.topicName);
             }
         });
+
         dialogs
             .action({
                 message: "Select available topics",
@@ -89,15 +92,15 @@ export class HomeComponent implements OnInit, OnDestroy {
                 }
             });
     }
-    public connect() {
+    public connect(): void {
         this.spinnerService.setSpinner(true);
         this.mqttService.connect();
     }
-    public disconnect() {
+    public disconnect(): void {
         this.spinnerService.setSpinner(true);
         this.mqttService.disconnect();
     }
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subs.forEach(sub => sub.unsubscribe());
     }
 }

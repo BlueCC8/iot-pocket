@@ -7,17 +7,13 @@
   >
   </ActivityIndicator>
   <FlexboxLayout flexDirection="row" *ngIf="!bulbConnected">
-    <Button
-      class="-primary -rounded-lg"
-      (tap)="connectToMagicBlue()"
-      text="Connect"
-    >
+    <Button class="-primary -rounded-lg" (tap)="connectToBulb()" text="Connect">
     </Button>
   </FlexboxLayout>
   <FlexboxLayout flexDirection="row" *ngIf="bulbConnected">
     <Button
       class="-primary -rounded-lg"
-      (tap)="disconnectToMagicBlue()"
+      (tap)="disconnectBulb()"
       text="Disconnect"
     >
     </Button>
@@ -62,10 +58,4 @@
       </Button>
     </FlexboxLayout>
   </FlexboxLayout>
-  <!-- <ActivityIndicator
-    [busy]="isLoading"
-    horizontalAlignment="center"
-    verticalAlignment="center"
-  >
-  </ActivityIndicator> -->
 </FlexboxLayout>

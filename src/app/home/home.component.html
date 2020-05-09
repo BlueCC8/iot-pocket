@@ -23,14 +23,14 @@
       loadMode="async"
       stretch="aspectFit"
     ></Image>
-    <Label class="header" text="IoT Pocket"></Label>
+    <Label class="header" style="color: #0075be;" text="IoT Pocket"></Label>
   </FlexboxLayout>
   <FlexboxLayout
     flexDirection="column"
     alignContent="center"
     justifyContent="center"
   >
-    <Label [text]="isConnected" class="font-weight-bold m-b-5"></Label>
+    <!-- <Label [text]="isConnected" class="font-weight-bold m-b-5"></Label> -->
     <Button
       *ngIf="isConnected"
       text="home works!"
