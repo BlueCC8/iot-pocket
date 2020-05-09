@@ -1,4 +1,4 @@
-import { MessageModel } from "../../models/message.model";
+import { MessageModel } from "../../shared/models/message.model";
 
 export class TopicModel {
     id: number = null;

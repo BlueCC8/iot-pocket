@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import * as appSettings from "tns-core-modules/application-settings";
 import { alert } from "tns-core-modules/ui/dialogs";
-import { ServerModel } from "../models/server.model";
+import { ServerModel } from "../shared/models/server.model";
 import { SpinnerService } from "../shared/services/spinner.service";
 import { MQTTService } from "../shared/services/mqtt.service";
 import { ClientOptions } from "nativescript-mqtt";
@@ -13,7 +13,7 @@ import { Location } from "@angular/common";
     selector: "ns-server-details",
     moduleId: module.id,
     templateUrl: "./server-details.component.html",
-    styleUrls: ["./server-details.component.css"]
+    styleUrls: ["./server-details.component.css"],
 })
 export class ServerDetailsComponent implements OnInit, OnDestroy {
     public isLoading = false;
@@ -30,12 +30,12 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subs.push(
             this.spinnerService.spinnerUpdated.subscribe(
-                spinnerState => (this.isLoading = spinnerState)
+                (spinnerState) => (this.isLoading = spinnerState)
             )
         );
         // TODO: For multiple servers a new date must be concatinated
 
-        Object.keys(this.serverModel).forEach(key => {
+        Object.keys(this.serverModel).forEach((key) => {
             if (typeof this.serverModel[key] === "number") {
                 this.serverModel[key] = appSettings.getNumber(
                     key,
@@ -93,7 +93,7 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
         this.location.back();
     }
     save() {
-        Object.keys(this.serverModel).forEach(key => {
+        Object.keys(this.serverModel).forEach((key) => {
             if (typeof this.serverModel[key] === "number") {
                 this.saveNumber(key, this.serverModel[key]);
             } else if (typeof this.serverModel[key] === "string") {
@@ -107,7 +107,7 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
             port: this.serverModel.port,
             useSSL: this.serverModel.useSSL,
             path: this.serverModel.path,
-            cleanSession: this.serverModel.cleanSession
+            cleanSession: this.serverModel.cleanSession,
         };
         this.spinnerService.setSpinner(true);
         this.mqttService.setupClientOptions(
@@ -120,7 +120,7 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
     }
     removeAll() {
         appSettings.clear();
-        Object.keys(this.serverModel).forEach(key => {
+        Object.keys(this.serverModel).forEach((key) => {
             if (typeof this.serverModel[key] === "number") {
                 this.serverModel[key] = 0;
             } else if (typeof this.serverModel[key] === "string") {
@@ -135,6 +135,6 @@ export class ServerDetailsComponent implements OnInit, OnDestroy {
         );
     }
     ngOnDestroy() {
-        this.subs.forEach(sub => sub.unsubscribe());
+        this.subs.forEach((sub) => sub.unsubscribe());
     }
 }
