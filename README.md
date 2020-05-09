@@ -31,9 +31,14 @@ Using git
 
 or download the zip file
 
-## Troubleshooting
+## Testing
 
-...soon...
+- Android: `tns test android`
+- iOS: `tns test ios`
+
+For emulators add the flag `--emulator` and for re-run add the flag `--watch`
+
+The tests a found in thier specific platform **NOT** in the browser
 
 ## Built With
 
@@ -54,7 +59,7 @@ Go ahead and contact me for any suggestions
 
 ## Versioning
 
-Version 1.0.0
+Version 3.0.0
 
 ## Authors
 
