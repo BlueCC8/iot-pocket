@@ -33,12 +33,14 @@ or download the zip file
 
 ## Testing
 
+### Unit testing
+
 - Android: `tns test android`
 - iOS: `tns test ios`
 
 For emulators add the flag `--emulator` and for re-run add the flag `--watch`
 
-The tests a found in thier specific platform **NOT** in the browser
+The tests are found in their specific platform **NOT** in the browser
 
 ## Built With
 
