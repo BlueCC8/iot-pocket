@@ -4,14 +4,14 @@ import {
     ClientOptions,
     MQTTClient,
     SubscribeOptions,
-    Message
+    Message,
 } from "nativescript-mqtt";
 import { Router } from "@angular/router";
 import { SpinnerService } from "./spinner.service";
 import { AlertService } from "./alert.service";
 import { Subject, BehaviorSubject } from "rxjs";
 import { TopicModel } from "~/app/topics/models/topic.model";
-import { MessageModel } from "~/app/models/message.model";
+import { MessageModel } from "~/app/shared/models/message.model";
 import { QualityOfService } from "~/app/shared/helpers/enum.helper";
 
 @Injectable()
@@ -69,7 +69,7 @@ export class MQTTService {
         this.topicsSubject.next(topics);
     }
     getTopic(id: number): TopicModel {
-        return this.topicsList.filter(item => item.id === id)[0];
+        return this.topicsList.filter((item) => item.id === id)[0];
     }
     connect(): void {
         try {
@@ -94,7 +94,7 @@ export class MQTTService {
 
             topicModel.topicName = topicName ? topicName : this.topic;
             this.topicsList = this.topicsList.filter(
-                topic => topic.topicName !== topicModel.topicName
+                (topic) => topic.topicName !== topicModel.topicName
             );
 
             this.setTopics([...this.topicsList]);
@@ -116,10 +116,7 @@ export class MQTTService {
             //TODO: Remove this
             console.log("Subscribe=" + topic.topicName);
 
-            topic.date = new Date()
-                .toJSON()
-                .slice(0, 19)
-                .replace("T", " ");
+            topic.date = new Date().toJSON().slice(0, 19).replace("T", " ");
             this.client.subscribe(topic.topicName, opts);
             this.alertService.showSuccess("Subscribed topic:", topic.topicName);
         } catch (e) {
@@ -139,7 +136,7 @@ export class MQTTService {
                 destinationName,
                 payloadBytes: bytes,
                 payloadString: mess,
-                retained
+                retained,
             });
             this.client.publish(message);
         } catch (e) {
@@ -152,7 +149,7 @@ export class MQTTService {
     }
 
     setupHandlers(): void {
-        this.client.onConnectionFailure.on(err => {
+        this.client.onConnectionFailure.on((err) => {
             this.alertService.showError("Connection failed: ", err);
             this.setServerStatus(false);
             this.spinnerService.setSpinner(false);
@@ -167,16 +164,16 @@ export class MQTTService {
             this.setServerStatus(true);
             this.spinnerService.setSpinner(false);
             this.router.navigate(["home"], {
-                queryParams: { isConnected: true }
+                queryParams: { isConnected: true },
             });
         });
 
-        this.client.onConnectionLost.on(err => {
+        this.client.onConnectionLost.on((err) => {
             this.alertService.showWarning("Connection lost: ", err);
             this.setServerStatus(false);
             this.spinnerService.setSpinner(false);
             this.router.navigate(["home"], {
-                queryParams: { isConnected: false }
+                queryParams: { isConnected: false },
             });
         });
 

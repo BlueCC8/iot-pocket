@@ -5,10 +5,12 @@ import { SpinnerService } from "../shared/services/spinner.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { TopicModel } from "../topics/models/topic.model";
 import { ActivatedRoute } from "@angular/router";
+import { DialogActionModel } from "../shared/models/dialog-action.model";
+import { PromptMessage } from "../shared/models/prompt-message.mode";
 @Component({
     selector: "ns-home",
     templateUrl: "./home.component.html",
-    styleUrls: ["./home.component.css"]
+    styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
     public isLoading = false;
@@ -38,14 +40,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         );
         this.subs.push(
             this.spinnerService.spinnerUpdated.subscribe(
-                spinnerState => (this.isLoading = spinnerState)
+                (spinnerState) => (this.isLoading = spinnerState)
             )
         );
         const firstLoaded = this.mqttService.topicsList;
 
         this.topics = firstLoaded;
         this.subs.push(
-            this.mqttService.topicsUpdated.subscribe(loadedTopics => {
+            this.mqttService.topicsUpdated.subscribe((loadedTopics) => {
                 this.topics = loadedTopics;
             })
         );
@@ -58,39 +60,33 @@ export class HomeComponent implements OnInit, OnDestroy {
                 topicsNames.push(topic.topicName);
             }
         });
-
-        dialogs
-            .action({
-                message: "Select available topics",
-                cancelButtonText: "Cancel",
-                actions: topicsNames
-            })
-            .then(result => {
-                this.selectedTopic = result;
-                if (this.selectedTopic !== "Cancel") {
-                    dialogs
-                        .prompt({
-                            title: `Message to the ${this.selectedTopic} topic`,
-                            message: "Enter your message",
-                            okButtonText: "Send",
-                            cancelButtonText: "Cancel",
-                            defaultText: "Default message",
-                            inputType: dialogs.inputType.text
-                        })
-                        .then(res => {
-                            if (res.result) {
-                                this.mqttService.publish(
-                                    res.text,
-                                    this.selectedTopic
-                                );
-                            } else {
-                                alert("Message cancelled");
-                            }
-                        });
-                } else {
-                    alert("Unselected topic");
-                }
-            });
+        const availableDialog: DialogActionModel = {
+            message: "Select available topics",
+            cancelButtonText: "Cancel",
+            actions: topicsNames,
+        };
+        const promptMessage: PromptMessage = {
+            title: `Message to the ${this.selectedTopic} topic`,
+            message: "Enter your message",
+            okButtonText: "Send",
+            cancelButtonText: "Cancel",
+            defaultText: "Default message",
+            inputType: dialogs.inputType.text,
+        };
+        dialogs.action(availableDialog).then((result) => {
+            this.selectedTopic = result;
+            if (this.selectedTopic !== "Cancel") {
+                dialogs.prompt(promptMessage).then((res) => {
+                    if (res.result) {
+                        this.mqttService.publish(res.text, this.selectedTopic);
+                    } else {
+                        alert("Message cancelled");
+                    }
+                });
+            } else {
+                alert("Unselected topic");
+            }
+        });
     }
     public connect(): void {
         this.spinnerService.setSpinner(true);
@@ -101,6 +97,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.mqttService.disconnect();
     }
     ngOnDestroy(): void {
-        this.subs.forEach(sub => sub.unsubscribe());
+        this.subs.forEach((sub) => sub.unsubscribe());
     }
 }
